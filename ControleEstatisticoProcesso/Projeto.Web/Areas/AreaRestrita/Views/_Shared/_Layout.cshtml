@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html>
+
+<html lang="pt-br">
+<head>
+    <meta name="viewport" content="width=device-width" />
+
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/layout.css" rel="stylesheet" />
+
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+
+    <link href="~/Content/themes/base/jquery-ui.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-ui-1.12.1.js"></script>
+
+    <script src="~/Scripts/Generic/messageBox.js"></script>
+       
+</head>
+<body>
+
+    @using Projeto.Entidades
+    @{
+        Usuario u = (Usuario)Session["usuario"];
+    }
+
+    <nav class="navbar navbar-default">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/AreaRestrita/CEP/Index"><img src="~/Imagens/IFRJ.png" width="180" height="35" /></a>
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+
+        <div class="collapse navbar-collapse bg-info" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+
+                <!--Pagina Inicial-->
+                <li>
+                    <a href="/AreaRestrita/CEP/Index">Página Inicial<span class="sr-only">(current)</span></a>
+                </li>
+
+                <!--Manutenção-->
+                <li class="dropdown">
+                    <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Manutenção<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                                                                       
+                        <li class="dropdown-submenu">
+                            <a href="">Operadores</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/AreaRestrita/Operador/Cadastro">Cadastrar Operadores</a></li>
+                                <li><a href="/AreaRestrita/Operador/Consulta">Consultar/Editar Operadores</a></li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                </li>
+
+
+                @if (u != null && u.Perfil.ToString().Equals("Administrador"))
+                {
+                    <!--Administrador-->
+                    <li class="dropdown">
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administrador<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/AreaRestrita/Usuario/Cadastro">Cadastrar Usuário</a></li>
+                            <li><a href="/AreaRestrita/Usuario/Consulta">Consultar/Editar Usuário</a></li>
+                        </ul>
+                    </li>
+                }
+
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/Usuario/Logout" class="glyphicon glyphicon-off" style="color:red"></a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        
+        <div id="messageBox" title="Atenção" style="display:none">
+            <p id="message"></p>
+        </div>
+
+        @RenderBody()
+    </div>
+
+</body>
+</html>

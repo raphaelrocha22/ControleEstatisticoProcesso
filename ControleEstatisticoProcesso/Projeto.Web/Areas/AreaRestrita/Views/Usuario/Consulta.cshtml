@@ -1,0 +1,62 @@
+﻿@model IEnumerable<Projeto.Web.Areas.AreaRestrita.Models.Users.ConsultaViewModel>
+
+@{
+    ViewBag.Title = "Consulta";
+    Layout = "~/Areas/AreaRestrita/Views/_Shared/_Layout.cshtml";
+}
+
+<title>Listagem de usuários</title>
+
+<h4>Consultar Usuarios</h4>
+
+<p>
+    @Html.ActionLink("Cadastrar novo usuário", "Cadastro")<br />
+</p>
+
+
+<table class="table">
+    <tr>
+        <th class="hidden">
+            @Html.DisplayNameFor(model => model.IdUsuario)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Nome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Login)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Perfil)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Ativo)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+    <tr>
+        <td class="hidden">
+            @Html.DisplayFor(modelItem => item.IdUsuario)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nome)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Login)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Perfil)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Ativo)
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "Edicao", new { id = item.IdUsuario }) |
+            @Html.ActionLink("Alterar Senha", "AlterarSenha", new { id = item.IdUsuario }) |
+        </td>
+    </tr>
+    }
+
+</table>

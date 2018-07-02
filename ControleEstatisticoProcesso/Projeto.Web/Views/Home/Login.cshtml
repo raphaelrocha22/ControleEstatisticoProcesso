@@ -1,0 +1,65 @@
+﻿@model Projeto.Web.Models.Home.LoginViewModel
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login Sistema</title>
+
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+
+</head>
+<body class="container bg-info">
+
+    @using (Html.BeginForm())
+    {
+        <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <div class="panel-title text-center"><strong>Acesso ao sistema Controle Estatístico Processo</strong></div>
+                </div>
+                <div style="padding-top:30px" class="panel-body">
+                    <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
+
+                    <div style="margin-bottom: 25px" class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        @Html.TextBoxFor(model => model.Login, new { @class = "form-control", @placeholder = "Login" })
+                        <span class="text-danger">@Html.ValidationMessageFor(model => model.Login)</span>
+                    </div>
+
+                    <div style="margin-bottom: 25px" class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                        @Html.PasswordFor(m => m.Senha, new { @class = "form-control", @placeholder = "Senha" })
+                        <span class="text-danger">@Html.ValidationMessageFor(model => model.Senha)</span>
+                    </div>
+
+                    <div style="margin-top:10px" class="form-group">
+                        <div class="col-md-12 controls">
+                            <input type="submit" value="Login" class="btn btn-primary center-block" style="width:100px" />
+                            <br />
+
+                            @if (ViewBag.Mensagem != null)
+                            {<div class="alert alert-danger">@ViewBag.Mensagem</div>}
+
+                            @if (Request.QueryString["ReturnUrl"] != null)
+                            {<div class="alert alert-danger">Você não tem permissão para executar essa operação. Por favor faça seu login</div>}
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div style="border-top: 1px solid#888; padding-top:15px; font-size:85%" class="text-primary">
+                            <div class="col-sm-4">
+                                <a href="/Home/AlterarSenha">Alterar Senha</a>
+                            </div>
+                            <div class="col-sm-offset-6">
+                                Desenvolvido por Raphael Rocha - IFRJ 2018
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</body>
+</html>

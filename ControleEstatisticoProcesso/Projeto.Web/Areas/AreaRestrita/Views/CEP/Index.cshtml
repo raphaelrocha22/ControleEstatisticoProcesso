@@ -1,0 +1,24 @@
+﻿@{
+    Layout = "~/Areas/AreaRestrita/Views/_Shared/_Layout.cshtml";
+}
+
+<title>Sistema Controle Estatístico de Processo</title>
+
+@using Projeto.Entidades
+@{
+    Usuario u = (Usuario)Session["usuario"];
+
+    if (DateTime.Now.Hour > 6 && DateTime.Now.Hour < 12)
+    {
+        <p><strong>Bom dia @u.Nome - Bem vindo(a) ao sistema</strong></p>
+    }
+    else if (DateTime.Now.Hour >= 12 && DateTime.Now.Hour < 18)
+    {
+        <p><strong>Boa tarde @u.Nome - Bem vindo(a) ao sistema</strong></p>
+    }
+    else
+    {
+        <p><strong>Boa noite @u.Nome - Bem vindo(a) ao sistema</strong></p>
+    }
+}
+<p>Escolha a tarefa que deseja realizar no topo da página</p>

@@ -1,0 +1,21 @@
+﻿.quebraPagina {
+    page-break-after: always;
+}
+
+.no-print {
+    display: none;
+}
+
+.footer {
+    position: unset;
+    left: 0;
+    margin-top: 15px;
+    height: 60px;
+    width: 100%;
+    text-align: center;
+    display: none
+}
+.grafico-Impressao {
+    height: 300px;
+    width: 1000px
+}
