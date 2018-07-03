@@ -14,6 +14,18 @@
 </p>
 
 
+@if (TempData["Sucesso"] != null)
+{
+    if ((bool)TempData["Sucesso"])
+    {
+        <div class="alert alert-success text-center form-group-lg"><strong>@TempData["Mensagem"]</strong></div>
+    }
+    else
+    {
+        <div class="alert alert-danger text-center form-group-lg"><strong>@TempData["Mensagem"]</strong></div>
+    }
+}
+
 <table class="table">
     <tr>
         <th class="hidden">
@@ -36,27 +48,27 @@
 
     @foreach (var item in Model)
     {
-    <tr>
-        <td class="hidden">
-            @Html.DisplayFor(modelItem => item.IdUsuario)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nome)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Login)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Perfil)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Ativo)
-        </td>
-        <td>
-            @Html.ActionLink("Editar", "Edicao", new { id = item.IdUsuario }) |
-            @Html.ActionLink("Alterar Senha", "AlterarSenha", new { id = item.IdUsuario }) |
-        </td>
-    </tr>
+        <tr>
+            <td class="hidden">
+                @Html.DisplayFor(modelItem => item.IdUsuario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Login)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Perfil)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ativo)
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "Edicao", new { id = item.IdUsuario }) |
+                @Html.ActionLink("Alterar Senha", "AlterarSenha", new { id = item.IdUsuario }) |
+            </td>
+        </tr>
     }
 
 </table>

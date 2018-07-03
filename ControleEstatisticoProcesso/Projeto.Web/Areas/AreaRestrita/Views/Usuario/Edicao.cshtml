@@ -7,7 +7,7 @@
 
 <title>Edição de usuário</title>
 
-<script src="~/Scripts/Generic/scriptGenericoCadastro.js"></script>
+<script src="~/Scripts/Generic/scriptGenericoEdicao.js"></script>
 
 <h4>Edição de Usuário</h4>
 <h6>(*) Campos obrigatórios</h6>
@@ -17,7 +17,7 @@
 </div>
 <hr />
 
-@using (Html.BeginForm("Edicao", "Usuario", FormMethod.Post, new { id = "formCadastro" }))
+@using (Html.BeginForm("Edicao", "Usuario", FormMethod.Post, new { id = "formEdicao" }))
 {
     @Html.AntiForgeryToken()
 
@@ -74,7 +74,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Atualizar" class="btn btn-default" />
+                <input type="submit" value="Atualizar" class="btn btn-default" id="btnAtualizar"/>
             </div>
         </div>
     </div>

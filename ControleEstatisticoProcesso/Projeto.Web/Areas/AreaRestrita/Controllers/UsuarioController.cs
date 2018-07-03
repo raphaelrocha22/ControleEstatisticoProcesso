@@ -125,7 +125,7 @@ namespace Projeto.Web.Areas.AreaRestrita.Controllers
                     TempData["Sucesso"] = true;
                     TempData["Mensagem"] = $"Usuário {u.Login} atualizado com sucesso";
 
-                    return RedirectToAction("Edicao", "Usuario");
+                    return RedirectToAction("Consulta", "Usuario");
                 }
             }
             catch (Exception e)
@@ -134,7 +134,7 @@ namespace Projeto.Web.Areas.AreaRestrita.Controllers
                 ViewBag.Mensagem = "Erro: " + e.Message;
             }
 
-            return View(new CadastroViewModel());
+            return View(new EdicaoViewModel());
         }
         
         [Authorize(Roles = "Administrador")]
@@ -154,10 +154,10 @@ namespace Projeto.Web.Areas.AreaRestrita.Controllers
                     var d = new UsuarioDAL();
                     d.AtualizarSenha(model.SenhaConfirm, model.IdUsuario);
 
-                    ModelState.Clear();
-
                     TempData["Sucesso"] = true;
                     TempData["Mensagem"] = "Senha atualizada com sucesso";
+
+                    return RedirectToAction("Consulta", "Usuario");
                 }
             }
             catch (Exception e)

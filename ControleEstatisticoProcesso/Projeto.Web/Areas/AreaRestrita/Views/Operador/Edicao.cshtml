@@ -1,0 +1,60 @@
+﻿@model Projeto.Web.Areas.AreaRestrita.Models.Operador.EdicaoViewModel
+@{
+    Layout = "~/Areas/AreaRestrita/Views/_Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/Generic/scriptGenericoCadastro.js"></script>
+
+<title>Edição de Operadores</title>
+
+<h4>Edição de Operadores</h4>
+<h6>(*) Campos obrigatórios</h6>
+
+<div>
+    <a href="/AreaRestrita/Operador/Consulta">Voltar para a página de Consulta</a>
+</div>
+<hr />
+
+@using (Html.BeginForm("Edicao", "Operador", FormMethod.Post, new { id = "formEdicao" }))
+{
+    @Html.AntiForgeryToken()
+
+    if (TempData["Sucesso"] != null)
+    {
+        if ((bool)TempData["Sucesso"])
+        {
+            <div class="alert alert-success text-center form-group-lg"><strong>@TempData["Mensagem"]</strong></div>
+        }
+        else
+        {
+            <div class="alert alert-danger text-center form-group-lg"><strong>@TempData["Mensagem"]</strong></div>
+        }
+    }
+
+    @Html.HiddenFor(m => m.IdOperador)
+
+    <div class="col-md-2">
+        @Html.DisplayNameFor(m => m.Setor)*
+        @Html.EnumDropDownListFor(m => m.Setor, "-Selecione-", new { @class = "form-control", @id = "txtSetor" })
+        @Html.ValidationMessageFor(m => m.Setor, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="col-md-4">
+        @Html.DisplayNameFor(m => m.Nome)*
+        @Html.TextBoxFor(m => m.Nome, new { @class = "form-control", @placeholder = "Digite aqui" })
+        @Html.ValidationMessageFor(m => m.Nome, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="col-md-1">
+        @Html.DisplayNameFor(m => m.Ativo)*<br />
+        @Html.CheckBoxFor(m => m.Ativo)
+        @Html.ValidationMessageFor(m => m.Ativo, "", new { @class = "text-danger" })
+    </div>
+
+
+    <div class="col-md-2">
+        <br />
+        <input type="submit" class="btn btn-success" value="Atualizar" id="btnAtualizar" />
+    </div>
+}
+

@@ -10,7 +10,7 @@
 @Html.ActionLink("Voltar para a página de consulta", "Consulta")
 <hr />
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("AlterarSenha", "Usuario", FormMethod.Post, new { id = "formEdicao" }))
 {
     @Html.AntiForgeryToken()
 
@@ -47,7 +47,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Atualizar" class="btn btn-default" />
+                <input type="submit" value="Atualizar" class="btn btn-default" id="btnAtualizar" />
             </div>
         </div>
     </div>

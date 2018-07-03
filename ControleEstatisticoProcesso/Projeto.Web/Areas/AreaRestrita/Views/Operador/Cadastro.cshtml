@@ -1,0 +1,53 @@
+﻿@model Projeto.Web.Areas.AreaRestrita.Models.Operador.CadastroViewModel
+@{
+    Layout = "~/Areas/AreaRestrita/Views/_Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/Generic/scriptGenericoCadastro.js"></script>
+<script src="~/Scripts/Operador/cadastro.js"></script>
+
+<title>Cadastro Operadores</title>
+
+<h4>Cadastro de Operadores</h4>
+<h6>(*) Campos obrigatórios</h6>
+
+<div>
+    <a href="/AreaRestrita/Operador/Consulta">Voltar para a página de Consulta</a>
+</div>
+<hr />
+
+@using (Html.BeginForm("Cadastro", "Operador", FormMethod.Post, new { id = "formCadastro" }))
+{
+    @Html.AntiForgeryToken()
+
+    if (TempData["Sucesso"] != null)
+    {
+        if ((bool)TempData["Sucesso"])
+        {
+            <div class="alert alert-success text-center form-group-lg"><strong>@TempData["Mensagem"]</strong></div>
+        }
+        else
+        {
+            <div class="alert alert-danger text-center form-group-lg"><strong>@TempData["Mensagem"]</strong></div>
+        }
+    }
+
+        <div class="col-md-2">
+            @Html.DisplayNameFor(m => m.Setor)*
+            @Html.EnumDropDownListFor(m => m.Setor, "-Selecione-", new { @class = "form-control", @id = "txtSetor" })
+            @Html.ValidationMessageFor(m => m.Setor, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="col-md-4">
+            @Html.DisplayNameFor(m => m.Nome)*
+            @Html.TextBoxFor(m => m.Nome, new { @class = "form-control", @placeholder = "Digite aqui" })
+            @Html.ValidationMessageFor(m => m.Nome, "", new { @class = "text-danger" })
+        </div>
+
+        
+        <div class="col-md-2">
+            <br />
+            <input type="submit" class="btn btn-success pull-right" value="Cadastrar" id="btnCadastrar" />
+        </div>
+}
+
