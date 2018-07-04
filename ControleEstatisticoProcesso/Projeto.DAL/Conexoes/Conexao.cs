@@ -19,7 +19,8 @@ namespace Projeto.DAL.Conexoes
         //métodos..
         protected void AbrirConexao()
         {
-            con = new SqlConnection(ConfigurationManager.ConnectionStrings["banco"].ConnectionString);
+            //con = new SqlConnection(ConfigurationManager.ConnectionStrings["bancoHome"].ConnectionString);
+            con = new SqlConnection(ConfigurationManager.ConnectionStrings["bancoRod"].ConnectionString);
             con.Open();
         }
 

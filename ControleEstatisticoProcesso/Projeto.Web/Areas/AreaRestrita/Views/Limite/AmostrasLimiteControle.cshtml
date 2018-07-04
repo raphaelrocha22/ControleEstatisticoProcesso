@@ -1,0 +1,32 @@
+﻿@model Projeto.Web.Areas.AreaRestrita.Models.Limite.MetodosPartial
+@{
+    ViewBag.Title = "CadastroAmostra";
+    Layout = "~/Areas/AreaRestrita/Views/_Shared/_Layout.cshtml";
+}
+
+<h4>Cálculo de Limites de Controle</h4>
+<h6>(*) Campos obrigatórios</h6>
+
+<div>
+    <a href="/AreaRestrita/CEP/Index">Voltar para a página inicial</a>
+</div>
+<hr />
+
+@if (TempData["Sucesso"] != null)
+{
+    if ((bool)TempData["Sucesso"])
+    {
+        <div class="alert alert-success text-center form-group-lg"><strong>@TempData["Mensagem"]</strong></div>
+    }
+    else
+    {
+        <div class="alert alert-danger text-center form-group-lg"><strong>@TempData["Mensagem"]</strong></div>
+    }
+}
+
+@if (Model.CadastroLote != null)
+{
+    <div class="row">
+        @Html.Partial("_CadastroLoteAmostra", Model.CadastroLoteAmostra)
+    </div>
+}

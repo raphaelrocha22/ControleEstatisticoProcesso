@@ -1,0 +1,58 @@
+﻿@model Projeto.Web.Areas.AreaRestrita.Models.Lote.CadastroLoteAmostraViewModel
+
+@using (Html.BeginForm("CadastroAmostras", "limite", FormMethod.Post, new { id = "formCadastro" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row" style="margin-bottom:20px">
+        <div class="col-md-2">
+            <label>Tipo Lote</label>
+            @Html.TextBoxFor(m => m.TipoLote, new { @class = "form-control", @id = "txtTipoLote", @readonly = "readonly" })
+        </div>
+
+        <div class="col-md-2">
+            <label>Analisado por</label>
+            @Html.TextBoxFor(m => m.UsuarioAnalise.Nome, new { @class = "form-control", @id = "txtUsuarioAnalise", @readonly = "readonly" })
+            @Html.ValidationMessageFor(m => m.UsuarioAnalise.Nome, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="col-md-2">
+            @Html.DisplayNameFor(m => m.QtdTotal)
+            @Html.TextBoxFor(m => m.QtdTotal, new { @class = "form-control", type = "number", min = "1", step = "1", @id = "txtQtdTotal" })
+            @Html.ValidationMessageFor(m => m.QtdTotal, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2">
+            @Html.DisplayNameFor(m => m.Lote)
+            @Html.TextBoxFor(m => m.Lote, new { @class = "form-control", type = "number", min = "1", step = "1", @id = "txtLote" })
+            @Html.ValidationMessageFor(m => m.Lote, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="col-md-2">
+            @Html.DisplayNameFor(m => m.QtdReprovada)
+            @Html.TextBoxFor(m => m.QtdReprovada, new { @class = "form-control", type = "number", min = "1", step = "1", @id = "txtQtdReprovada" })
+            @Html.ValidationMessageFor(m => m.QtdReprovada, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="col-md-2">
+            <label>% Reprov.</label>
+            <input type="text" class="form-control" id="txtPercentReprovacao" readonly />
+        </div>
+
+        <div class="col-md-6">
+            @Html.DisplayNameFor(m => m.Comentario)
+            @Html.TextAreaFor(m => m.Comentario, new { @class = "form-control", @id = "txtQtdReprovada", @placeholder = "Digite aqui..." })
+            @Html.ValidationMessageFor(m => m.Comentario, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="col-md-1">
+            <br />
+            <input type="submit" class="btn btn-success" value="Cadastrar" id="btnCadastrar" />
+        </div>
+
+    </div>
+}
+
+

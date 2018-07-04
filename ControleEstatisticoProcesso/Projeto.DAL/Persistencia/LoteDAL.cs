@@ -15,8 +15,8 @@ namespace Projeto.DAL.Persistencia
             {
                 AbrirConexao();
 
-                string query = "insert into Lote (idLote, dataHora, qtdTotal, qtdReprovada, percentualReprovado, status, comentario, idUsuarioAnalise, idUsuarioAprovacao, tipoLote) " +
-                    "values (@idLote, @dataHora, @qtdTotal, @qtdReprovada, @percentualReprovado, @status, @comentario, @idUsuarioAnalise, @idUsuarioAprovacao, @tipoLote); " +
+                string query = "insert into Lote (idLote, dataHora, qtdTotal, qtdReprovada, percentualReprovado, comentario, idUsuarioAnalise, tipoLote) " +
+                    "values (@idLote, @dataHora, @qtdTotal, @qtdReprovada, @percentualReprovado, @comentario, @idUsuarioAnalise, @tipoLote); " +
                     "insert into TempLote values (@idLote)";
 
                 cmd = new SqlCommand(query, con);
@@ -25,7 +25,7 @@ namespace Projeto.DAL.Persistencia
                 cmd.Parameters.AddWithValue("@qtdTotal", l.QtdTotal);
                 cmd.Parameters.AddWithValue("@qtdReprovada", l.QtdReprovada);
                 cmd.Parameters.AddWithValue("@percentualReprovado", l.PercentualReprovado);
-                cmd.Parameters.AddWithValue("@status", l.Status);
+                cmd.Parameters.AddWithNullValue("@status", l.Status);
                 cmd.Parameters.AddWithNullValue("@comentario", l.Comentario);
                 cmd.Parameters.AddWithValue("@idUsuarioAnalise", l.UsuarioAnalise.IdUsuario);
                 cmd.Parameters.AddWithNullValue("@idUsuarioAprovacao", l.UsuarioAprovacao.IdUsuario);
