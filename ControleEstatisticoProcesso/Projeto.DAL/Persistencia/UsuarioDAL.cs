@@ -17,13 +17,14 @@ namespace Projeto.DAL.Persistencia
             {
                 AbrirConexao();
 
-                string query = "insert into Usuario (dataCadastro,nome,login,senha,perfil,ativo) values (@dataCadastro,@nome,@login,@senha,@perfil,@ativo)";
+                string query = "insert into Usuario (dataCadastro,nome,login,senha,perfil,setor,ativo) values (@dataCadastro,@nome,@login,@senha,@perfil,@setor,@ativo)";
                 cmd = new SqlCommand(query, con);
                 cmd.Parameters.AddWithValue("@dataCadastro", DateTime.Now);
                 cmd.Parameters.AddWithValue("@nome", u.Nome);
                 cmd.Parameters.AddWithValue("@login", u.Login);
                 cmd.Parameters.AddWithValue("@senha", Criptografia.EncriptarSenha(u.Senha));
                 cmd.Parameters.AddWithValue("@perfil", u.Perfil.ToString());
+                cmd.Parameters.AddWithValue("@setor", u.Setor.ToString());
                 cmd.Parameters.AddWithValue("@ativo", u.Ativo);
                 cmd.ExecuteNonQuery();
             }
@@ -50,6 +51,7 @@ namespace Projeto.DAL.Persistencia
                     u.Nome = dr["nome"].ToString();
                     u.Login = dr["login"].ToString();
                     u.Perfil = (PerfilUsuario)Enum.Parse(typeof(PerfilUsuario), dr["perfil"].ToString());
+                    u.Setor = (Setor)Enum.Parse(typeof(Setor), dr["setor"].ToString());
                     u.Ativo = (bool)dr["ativo"];
 
                     lista.Add(u);
@@ -68,7 +70,7 @@ namespace Projeto.DAL.Persistencia
             {
                 AbrirConexao();
 
-                string query = "select idUsuario,nome,login,senha,perfil,ativo from Usuario where login = @login and senha = @senha and ativo = @ativo";
+                string query = "select idUsuario,nome,login,senha,perfil,setor,ativo from Usuario where login = @login and senha = @senha and ativo = @ativo";
                 cmd = new SqlCommand(query, con);
                 cmd.Parameters.AddWithValue("@ativo", true);
                 cmd.Parameters.AddWithValue("@login", login);
@@ -93,7 +95,7 @@ namespace Projeto.DAL.Persistencia
             {
                 AbrirConexao();
 
-                string query = "select idUsuario,nome,login,senha,perfil,ativo from Usuario where idUsuario = @id";
+                string query = "select idUsuario,nome,login,senha,perfil,setor,ativo from Usuario where idUsuario = @id";
                 cmd = new SqlCommand(query, con);
                 cmd.Parameters.AddWithValue("@id", id);
                 dr = cmd.ExecuteReader();
@@ -116,7 +118,7 @@ namespace Projeto.DAL.Persistencia
             {
                 AbrirConexao();
 
-                string query = "select idUsuario, nome, login, perfil, ativo from Usuario";
+                string query = "select idUsuario, nome, login, perfil,setor, ativo from Usuario";
                 cmd = new SqlCommand(query, con);
                 dr = cmd.ExecuteReader();
 
@@ -160,12 +162,13 @@ namespace Projeto.DAL.Persistencia
             {
                 AbrirConexao();
 
-                string query = "update Usuario set nome = @nome, login = @login, ativo = @ativo, perfil = @perfil where idUsuario = @id";
+                string query = "update Usuario set nome = @nome, login = @login, ativo = @ativo, perfil = @perfil, setor = @setor where idUsuario = @id";
                 cmd = new SqlCommand(query, con);
                 cmd.Parameters.AddWithValue("@nome", u.Nome);
                 cmd.Parameters.AddWithValue("@login", u.Login);
                 cmd.Parameters.AddWithValue("@ativo", u.Ativo);
                 cmd.Parameters.AddWithValue("@perfil", u.Perfil.ToString());
+                cmd.Parameters.AddWithValue("@setor", u.Setor.ToString());
                 cmd.Parameters.AddWithValue("@id", u.IdUsuario);
                 cmd.ExecuteNonQuery();
             }

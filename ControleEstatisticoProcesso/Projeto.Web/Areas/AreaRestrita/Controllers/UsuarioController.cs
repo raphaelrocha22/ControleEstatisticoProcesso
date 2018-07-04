@@ -42,7 +42,7 @@ namespace Projeto.Web.Areas.AreaRestrita.Controllers
                     u.Nome = model.Nome;
                     u.Login = model.Login.ToLower();
                     u.Perfil = model.Perfil;
-
+                    u.Setor = model.Setor;
                     u.Senha = model.SenhaConfirm;
                     u.Ativo = true;
                     new UsuarioDAL().CadastrarUsuario(u);
@@ -74,6 +74,7 @@ namespace Projeto.Web.Areas.AreaRestrita.Controllers
                 model.Nome = item.Nome;
                 model.Login = item.Login;
                 model.Perfil = item.Perfil;
+                model.Setor = item.Setor;
                 model.Ativo = item.Ativo;
 
                 lista.Add(model);
@@ -94,6 +95,7 @@ namespace Projeto.Web.Areas.AreaRestrita.Controllers
                 model.Login = u.Login;
                 model.Ativo = u.Ativo;
                 model.Perfil = u.Perfil;
+                model.Setor = u.Setor;
 
                 return View(model);
             }
@@ -118,6 +120,7 @@ namespace Projeto.Web.Areas.AreaRestrita.Controllers
                     u.Nome = model.Nome;
                     u.Login = model.Login.ToLower();
                     u.Perfil = model.Perfil;
+                    u.Setor = model.Setor;
                     u.Ativo = model.Ativo;
 
                     new UsuarioDAL().AtualizarUsuario(u);

@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace Projeto.Entidades.Enuns
 {
-    public enum PerfilUsuario
+    public enum TipoLote
     {
-        Administrador = 1,
-        Operador = 2,
-        Supervisor = 3,
-        Gerente = 4
+        Amostra = 1,
+        Producao = 2
     }
 }

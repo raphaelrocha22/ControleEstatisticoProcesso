@@ -15,6 +15,7 @@ namespace Projeto.Entidades
         public string Login { get; set; }
         public string Senha { get; set; }
         public PerfilUsuario Perfil { get; set; }
+        public Setor Setor { get; set; }
         public bool Ativo { get; set; }
     }
 }

@@ -310,9 +310,6 @@
     <Content Include="Areas\AreaRestrita\Views\_ViewStart.cshtml" />
     <Content Include="Areas\AreaRestrita\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\AreaRestrita\Views\Usuario\Edicao.cshtml" />
-    <Content Include="Areas\AreaRestrita\Views\Operador\Cadastro.cshtml" />
-    <Content Include="Areas\AreaRestrita\Views\Operador\Consulta.cshtml" />
-    <Content Include="Areas\AreaRestrita\Views\Operador\Edicao.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.min.js" />
@@ -401,18 +398,13 @@
     <Content Include="Scripts\jquery-ui-1.12.1.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
-    <Content Include="Scripts\Operador\consulta.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\AreaRestrita\AreaRestritaAreaRegistration.cs" />
     <Compile Include="Areas\AreaRestrita\Controllers\CEPController.cs" />
-    <Compile Include="Areas\AreaRestrita\Controllers\OperadorController.cs" />
     <Compile Include="Areas\AreaRestrita\Controllers\UsuarioController.cs" />
-    <Compile Include="Areas\AreaRestrita\Models\Operador\CadastroViewModel.cs" />
-    <Compile Include="Areas\AreaRestrita\Models\Operador\ConsultaViewModel.cs" />
-    <Compile Include="Areas\AreaRestrita\Models\Operador\EdicaoViewModel.cs" />
     <Compile Include="Areas\AreaRestrita\Models\Users\AlterarSenhaViewModel.cs" />
     <Compile Include="Areas\AreaRestrita\Models\Users\CadastroViewModel.cs" />
     <Compile Include="Areas\AreaRestrita\Models\Users\ConsultaViewModel.cs" />

@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace Projeto.Entidades.Enuns
 {
-    public enum PerfilUsuario
+    public enum Status
     {
-        Administrador = 1,
-        Operador = 2,
-        Supervisor = 3,
-        Gerente = 4
+        Aprovado = 1,
+        Reprovado = 2,
+        AprovadoSupervisao = 3
     }
 }
