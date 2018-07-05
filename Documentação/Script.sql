@@ -6,6 +6,17 @@ go
 Use ControleEstatisticoProcesso
 go
 
+create table Maquina(
+idMaquina int identity,
+codInterno varchar(20),
+modelo varchar(50) not null,
+fabricante varchar(50) not null,
+setor varchar(20) not null,
+constraint Maquina_idMaquina_PK primary key(idMaquina),
+constraint Maquina_codInterno_UQ unique(codInterno)
+)
+go
+
 create table Usuario(
 idUsuario int identity(100,1),
 dataCadastro datetime not null,
@@ -49,6 +60,8 @@ idUsuarioAnalise int not null,
 idUsuarioAprovacao int,
 tipoLote varchar(20) not null,
 idLimite int,
+idMaquina int not null,
+constraint Lote_idMaquina_FK foreign key (idMaquina) references Maquina(idMaquina),
 constraint Lote_idLote_PK primary key(idLote),
 constraint Lote_idLimite_FK foreign key (idLimite) references LimiteControle(idLimite),
 constraint Lote_idUsuarioAnalise_FK foreign key (idUsuarioAnalise) references Usuario(idUsuario),

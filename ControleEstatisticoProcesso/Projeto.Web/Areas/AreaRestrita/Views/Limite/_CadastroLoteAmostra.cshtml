@@ -1,17 +1,26 @@
 ﻿@model Projeto.Web.Areas.AreaRestrita.Models.Lote.CadastroLoteAmostraViewModel
 
+<p><strong>Cadastrar Lote</strong></p>
+
 @using (Html.BeginForm("CadastroAmostras", "limite", FormMethod.Post, new { id = "formCadastro" }))
 {
     @Html.AntiForgeryToken()
 
     <div class="row" style="margin-bottom:20px">
         <div class="col-md-2">
-            <label>Tipo Lote</label>
+            @Html.DisplayNameFor(m => m.TipoLote)
             @Html.TextBoxFor(m => m.TipoLote, new { @class = "form-control", @id = "txtTipoLote", @readonly = "readonly" })
         </div>
 
         <div class="col-md-2">
-            <label>Analisado por</label>
+            @Html.DisplayNameFor(m => m.IdMaquina)
+            @Html.DropDownListFor(m => m.IdMaquina, Model.ListarMaquinas, "Selecione", new { @class = "form-control", @id = "txtMaquina" })
+            @Html.ValidationMessageFor(m => m.UsuarioAnalise.Nome, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="col-md-2">
+            @Html.DisplayNameFor(m => m.UsuarioAnalise)
+            @Html.HiddenFor(m => m.UsuarioAnalise.IdUsuario)
             @Html.TextBoxFor(m => m.UsuarioAnalise.Nome, new { @class = "form-control", @id = "txtUsuarioAnalise", @readonly = "readonly" })
             @Html.ValidationMessageFor(m => m.UsuarioAnalise.Nome, "", new { @class = "text-danger" })
         </div>
@@ -25,23 +34,23 @@
 
     <div class="row">
         <div class="col-md-2">
-            @Html.DisplayNameFor(m => m.Lote)
-            @Html.TextBoxFor(m => m.Lote, new { @class = "form-control", type = "number", min = "1", step = "1", @id = "txtLote" })
-            @Html.ValidationMessageFor(m => m.Lote, "", new { @class = "text-danger" })
+            @Html.DisplayNameFor(m => m.IdLote)
+            @Html.TextBoxFor(m => m.IdLote, new { @class = "form-control", type = "number", min = "1", step = "1", @id = "txtLote" })
+            @Html.ValidationMessageFor(m => m.IdLote, "", new { @class = "text-danger" })
         </div>
 
         <div class="col-md-2">
             @Html.DisplayNameFor(m => m.QtdReprovada)
-            @Html.TextBoxFor(m => m.QtdReprovada, new { @class = "form-control", type = "number", min = "1", step = "1", @id = "txtQtdReprovada" })
+            @Html.TextBoxFor(m => m.QtdReprovada, new { @class = "form-control", type = "number", min = "0", step = "1", @id = "txtQtdReprovada" })
             @Html.ValidationMessageFor(m => m.QtdReprovada, "", new { @class = "text-danger" })
         </div>
 
         <div class="col-md-2">
-            <label>% Reprov.</label>
+            % Reprov.
             <input type="text" class="form-control" id="txtPercentReprovacao" readonly />
         </div>
 
-        <div class="col-md-6">
+        <div class="col-md-4">
             @Html.DisplayNameFor(m => m.Comentario)
             @Html.TextAreaFor(m => m.Comentario, new { @class = "form-control", @id = "txtQtdReprovada", @placeholder = "Digite aqui..." })
             @Html.ValidationMessageFor(m => m.Comentario, "", new { @class = "text-danger" })

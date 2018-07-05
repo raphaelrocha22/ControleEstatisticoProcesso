@@ -4,6 +4,8 @@
     Layout = "~/Areas/AreaRestrita/Views/_Shared/_Layout.cshtml";
 }
 
+<script src="~/Scripts/Limite/CadastroAmostras.js"></script>
+
 <h4>Cálculo de Limites de Controle</h4>
 <h6>(*) Campos obrigatórios</h6>
 
@@ -24,9 +26,17 @@
     }
 }
 
-@if (Model.CadastroLote != null)
+@if (Model.CadastroLoteAmostra != null)
 {
     <div class="row">
         @Html.Partial("_CadastroLoteAmostra", Model.CadastroLoteAmostra)
+    </div>
+    <hr />
+}
+
+@if (Model.ConsultaLoteAmostra != null)
+{
+    <div class="row">
+        @Html.Partial("_ConsultaLoteAmostra", Model.ConsultaLoteAmostra)
     </div>
 }

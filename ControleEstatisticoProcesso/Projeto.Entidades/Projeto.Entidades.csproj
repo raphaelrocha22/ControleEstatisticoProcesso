@@ -46,6 +46,7 @@
     <Compile Include="Enuns\TipoLote.cs" />
     <Compile Include="LimiteControle.cs" />
     <Compile Include="Lote.cs" />
+    <Compile Include="Maquina.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Usuario.cs" />
   </ItemGroup>

@@ -14,18 +14,20 @@ namespace Projeto.Web.Areas.AreaRestrita.Controllers
     public class LimiteController : Controller
     {
         // GET: AreaRestrita/Lote
-        public ActionResult AmostrasLimiteControle(int? qtdTotal)
+        public ActionResult CadastroAmostras(int? qtdTotal, int? idMaquina)
         {
             var model = new MetodosPartial();
             model.CadastroLoteAmostra = new CadastroLoteAmostraViewModel();
             model.CadastroLoteAmostra.UsuarioAnalise = new Usuario();
-
+            
             try
             {
                 model.CadastroLoteAmostra.UsuarioAnalise = (Usuario)Session["usuario"];
                 model.CadastroLoteAmostra.TipoLote = Entidades.Enuns.TipoLote.Amostra;
-                if (qtdTotal != null)
-                    model.CadastroLoteAmostra.QtdTotal = (int)qtdTotal;
+                model.CadastroLoteAmostra.QtdTotal = qtdTotal != null ? (int)qtdTotal : 0;
+                model.CadastroLoteAmostra.IdMaquina = idMaquina != null ? (int)idMaquina : 0;
+
+                model.ConsultaLoteAmostra = ConsultarAmostras();
             }
             catch (Exception e)
             {
@@ -35,6 +37,34 @@ namespace Projeto.Web.Areas.AreaRestrita.Controllers
 
             return View(model);
         }
+
+        private List<ConsultaLoteAmostraViewModel> ConsultarAmostras()
+        {
+            try
+            {
+                var lista = new List<ConsultaLoteAmostraViewModel>();
+                foreach (var item in new LoteDAL().ConsultarAmostras())
+                {
+                    var m = new ConsultaLoteAmostraViewModel();
+                    m.IdLote = item.IdLote;
+                    m.DataHora = item.DataHora.ToString("dd/MM/yyyy HH:mm");
+                    m.QtdTotal = item.QtdTotal;
+                    m.QtdReprovada = item.QtdReprovada;
+                    m.PercentualReprovado = Math.Round(item.PercentualReprovado * 100,2);
+                    m.Comentario = item.Comentario;
+                    m.UsuarioAnalise = item.UsuarioAnalise.Nome;
+                    m.TipoLote = item.TipoLote;
+
+                    lista.Add(m);
+                }
+                return lista;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
 
         [ValidateAntiForgeryToken]
         [HttpPost]
@@ -46,27 +76,35 @@ namespace Projeto.Web.Areas.AreaRestrita.Controllers
                 {
                     var l = new Lote();
                     l.UsuarioAnalise = new Usuario();
+                    l.Maquina = new Maquina();
 
                     l.IdLote = model.IdLote;
                     l.DataHora = DateTime.Now;
                     l.QtdTotal = model.QtdTotal;
                     l.QtdReprovada = model.QtdReprovada;
+                    l.PercentualReprovado = Convert.ToDecimal(l.QtdReprovada) / Convert.ToDecimal(l.QtdTotal);
                     l.Comentario = model.Comentario;
                     l.UsuarioAnalise.IdUsuario = model.UsuarioAnalise.IdUsuario;
                     l.TipoLote = model.TipoLote;
+                    l.Maquina.IdMaquina = model.IdMaquina;
 
                     new LoteDAL().CadastrarLoteAmostra(l);
 
-                    return AmostrasLimiteControle(model.QtdTotal);
+                    TempData["Sucesso"] = true;
+                    TempData["Mensagem"] = $"Lote{model.IdLote} cadastrado com sucesso";
+
+                    ModelState.Clear();
+                    return CadastroAmostras(model.QtdTotal, model.IdMaquina);
                 }
-
             }
-            catch (Exception)
+            catch (Exception e)
             {
-
-                throw;
+                TempData["Sucesso"] = false;
+                TempData["Mensagem"] = $"Erro: {e.Message}";
             }
-            return View();
+            return View(model);
         }
+
+
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Projeto.DAL.Conexoes;
 using Projeto.DAL.Repositorio;
 using Projeto.Entidades;
+using Projeto.Entidades.Enuns;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -15,8 +16,8 @@ namespace Projeto.DAL.Persistencia
             {
                 AbrirConexao();
 
-                string query = "insert into Lote (idLote, dataHora, qtdTotal, qtdReprovada, percentualReprovado, comentario, idUsuarioAnalise, tipoLote) " +
-                    "values (@idLote, @dataHora, @qtdTotal, @qtdReprovada, @percentualReprovado, @comentario, @idUsuarioAnalise, @tipoLote); " +
+                string query = "insert into Lote (idLote, dataHora, qtdTotal, qtdReprovada, percentualReprovado, comentario, idUsuarioAnalise, tipoLote,idMaquina) " +
+                    "values (@idLote, @dataHora, @qtdTotal, @qtdReprovada, @percentualReprovado, @comentario, @idUsuarioAnalise, @tipoLote,@idMaquina); " +
                     "insert into TempLote values (@idLote)";
 
                 cmd = new SqlCommand(query, con);
@@ -25,11 +26,10 @@ namespace Projeto.DAL.Persistencia
                 cmd.Parameters.AddWithValue("@qtdTotal", l.QtdTotal);
                 cmd.Parameters.AddWithValue("@qtdReprovada", l.QtdReprovada);
                 cmd.Parameters.AddWithValue("@percentualReprovado", l.PercentualReprovado);
-                cmd.Parameters.AddWithNullValue("@status", l.Status);
                 cmd.Parameters.AddWithNullValue("@comentario", l.Comentario);
                 cmd.Parameters.AddWithValue("@idUsuarioAnalise", l.UsuarioAnalise.IdUsuario);
-                cmd.Parameters.AddWithNullValue("@idUsuarioAprovacao", l.UsuarioAprovacao.IdUsuario);
-                cmd.Parameters.AddWithValue("@tipoLote", l.TipoLote);
+                cmd.Parameters.AddWithValue("@tipoLote", l.TipoLote.ToString());
+                cmd.Parameters.AddWithValue("@idMaquina", l.Maquina.IdMaquina);
                 cmd.ExecuteNonQuery();
 
             }
@@ -77,6 +77,50 @@ namespace Projeto.DAL.Persistencia
             }
         }
 
+
+        public List<Lote> ConsultarAmostras()
+        {
+            try
+            {
+                AbrirConexao();
+
+                string query = "select l.idLote, dataHora, qtdTotal, qtdReprovada, percentualReprovado,comentario,u.nome,l.tipoLote from Lote l " +
+                    "inner join Usuario u on l.idUsuarioAnalise = u.idUsuario " +
+                    "inner join TempLote tp on l.idLote = tp.idLote " +
+                    "order by dataHora";
+
+                cmd = new SqlCommand(query, con);
+                dr = cmd.ExecuteReader();
+
+                var lista = new List<Lote>();
+
+                while (dr.Read())
+                {
+                    var l = new Lote();
+                    l.UsuarioAnalise = new Usuario();
+
+                    l.IdLote = (int)dr["idLote"];
+                    l.DataHora = (DateTime)dr["dataHora"];
+                    l.QtdTotal = (int)dr["qtdTotal"];
+                    l.QtdReprovada = (int)dr["qtdReprovada"];
+                    l.PercentualReprovado = (decimal)dr["percentualReprovado"];
+                    l.Comentario = dr["comentario"].ToString();
+                    l.UsuarioAnalise.Nome = dr["nome"].ToString();
+                    l.TipoLote = (TipoLote)Enum.Parse(typeof(TipoLote), dr["tipoLote"].ToString());
+
+                    lista.Add(l);
+                }
+                return lista;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            finally
+            {
+                FecharConexao();
+            }
+        }
 
         
     }

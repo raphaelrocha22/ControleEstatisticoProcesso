@@ -9,5 +9,6 @@ namespace Projeto.Web.Areas.AreaRestrita.Models.Limite
     public class MetodosPartial
     {
         public CadastroLoteAmostraViewModel CadastroLoteAmostra { get; set; }
+        public List<ConsultaLoteAmostraViewModel> ConsultaLoteAmostra { get; set; }
     }
 }

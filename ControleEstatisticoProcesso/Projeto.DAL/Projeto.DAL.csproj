@@ -45,6 +45,7 @@
     <Compile Include="Conexoes\Criptografia.cs" />
     <Compile Include="Conexoes\Tratamento.cs" />
     <Compile Include="Persistencia\LoteDAL.cs" />
+    <Compile Include="Persistencia\MaquinaDAL.cs" />
     <Compile Include="Persistencia\UsuarioDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

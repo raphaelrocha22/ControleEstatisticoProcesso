@@ -20,6 +20,7 @@ namespace Projeto.Entidades
         public Usuario UsuarioAprovacao { get; set; }
         public TipoLote TipoLote { get; set; }
 
+        public Maquina Maquina { get; set; }
         public LimiteControle LimiteControle { get; set; }
     }
 }
