@@ -7,11 +7,16 @@
     @Html.AntiForgeryToken()
 
     <div class="row" style="margin-bottom:20px">
+        <div class="col-md-3">
+            @Html.DisplayNameFor(m => m.TipoCarta)
+            @Html.TextBoxFor(m => m.TipoCarta, new { @class = "form-control", @id = "txtTipoCarta", @readonly = "readonly" })
+        </div>
+        
         <div class="col-md-2">
             @Html.DisplayNameFor(m => m.TipoLote)
             @Html.TextBoxFor(m => m.TipoLote, new { @class = "form-control", @id = "txtTipoLote", @readonly = "readonly" })
         </div>
-
+        
         <div class="col-md-2">
             @Html.DisplayNameFor(m => m.IdMaquina)
             @Html.DropDownListFor(m => m.IdMaquina, Model.ListarMaquinas, "Selecione", new { @class = "form-control", @id = "txtMaquina" })
@@ -25,7 +30,7 @@
             @Html.ValidationMessageFor(m => m.UsuarioAnalise.Nome, "", new { @class = "text-danger" })
         </div>
 
-        <div class="col-md-2">
+        <div class="col-md-1">
             @Html.DisplayNameFor(m => m.QtdTotal)
             @Html.TextBoxFor(m => m.QtdTotal, new { @class = "form-control", type = "number", min = "1", step = "1", @id = "txtQtdTotal" })
             @Html.ValidationMessageFor(m => m.QtdTotal, "", new { @class = "text-danger" })

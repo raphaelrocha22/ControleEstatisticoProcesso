@@ -3,8 +3,10 @@
     ViewBag.Title = "CadastroAmostra";
     Layout = "~/Areas/AreaRestrita/Views/_Shared/_Layout.cshtml";
 }
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
-<script src="~/Scripts/Limite/CadastroAmostras.js"></script>
+<script src="~/Scripts/Limite/cadastroAmostras.js"></script>
+<script src="~/Scripts/Limite/calculoLimite.js"></script>
 
 <h4>Cálculo de Limites de Controle</h4>
 <h6>(*) Campos obrigatórios</h6>
@@ -40,3 +42,7 @@
         @Html.Partial("_ConsultaLoteAmostra", Model.ConsultaLoteAmostra)
     </div>
 }
+
+<div class="row">
+    @Html.Partial("_CalculoLimiteControle"))
+</div>

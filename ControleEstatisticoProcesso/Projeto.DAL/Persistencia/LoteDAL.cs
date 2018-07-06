@@ -84,8 +84,9 @@ namespace Projeto.DAL.Persistencia
             {
                 AbrirConexao();
 
-                string query = "select l.idLote, dataHora, qtdTotal, qtdReprovada, percentualReprovado,comentario,u.nome,l.tipoLote from Lote l " +
+                string query = "select l.idLote, dataHora, qtdTotal, qtdReprovada, percentualReprovado,comentario,u.nome,l.tipoLote, m.idMaquina, m.codInterno from Lote l " +
                     "inner join Usuario u on l.idUsuarioAnalise = u.idUsuario " +
+                    "inner join Maquina m on l.idMaquina = m.idMaquina " +
                     "inner join TempLote tp on l.idLote = tp.idLote " +
                     "order by dataHora";
 
@@ -98,6 +99,7 @@ namespace Projeto.DAL.Persistencia
                 {
                     var l = new Lote();
                     l.UsuarioAnalise = new Usuario();
+                    l.Maquina = new Maquina();
 
                     l.IdLote = (int)dr["idLote"];
                     l.DataHora = (DateTime)dr["dataHora"];
@@ -107,6 +109,8 @@ namespace Projeto.DAL.Persistencia
                     l.Comentario = dr["comentario"].ToString();
                     l.UsuarioAnalise.Nome = dr["nome"].ToString();
                     l.TipoLote = (TipoLote)Enum.Parse(typeof(TipoLote), dr["tipoLote"].ToString());
+                    l.Maquina.IdMaquina = (int)dr["idMaquina"];
+                    l.Maquina.CodInterno = dr["codInterno"].ToString();
 
                     lista.Add(l);
                 }

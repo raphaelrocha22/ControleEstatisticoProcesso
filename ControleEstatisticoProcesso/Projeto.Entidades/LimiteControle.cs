@@ -14,6 +14,7 @@ namespace Projeto.Entidades
         public decimal LC { get; set; }
         public decimal LIC { get; set; }
         public bool Ativo { get; set; }
+        public string TipoCarta { get; set; }
 
         public List<Lote> Lotes { get; set; }
     }

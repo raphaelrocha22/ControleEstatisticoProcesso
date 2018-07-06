@@ -25,6 +25,9 @@
         <th>
             @Html.DisplayNameFor(model => model.TipoLote)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Maquina)
+        </th>
         <th class="hidden">
             @Html.DisplayNameFor(model => model.Comentario)
         </th>
@@ -54,11 +57,14 @@
         <td>
             @Html.DisplayFor(modelItem => item.TipoLote)
         </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Maquina.CodInterno)
+        </td>
         <td class="hidden">
             @Html.DisplayFor(modelItem => item.Comentario)
         </td>
         <td>
-            @Html.ActionLink("Comentarios", "Comentario", new { /* id=item.PrimaryKey */ })
+            <button class="btn btn-default btn-sm" onclick="messageBox('@item.Comentario')">Comentário</button>
             @Html.ActionLink("Deletar", "Delete", new { /* id=item.PrimaryKey */ })
         </td>
     </tr>

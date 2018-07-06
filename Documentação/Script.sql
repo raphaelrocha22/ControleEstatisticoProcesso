@@ -43,6 +43,7 @@ LC decimal(5,4) not null,
 LIC decimal(5,4) not null,
 idUsuarioAprovacao int not null,
 ativo bit not null,
+tipoCarta varchar(30) not null,
 constraint LimiteControle_idLimite_PK primary key(idLimite),
 constraint LimiteControle_idUsuarioAprovacao_FK foreign key (idUsuarioAprovacao) references Usuario(idUsuario)
 )

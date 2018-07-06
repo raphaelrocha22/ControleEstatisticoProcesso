@@ -40,6 +40,9 @@ namespace Projeto.Web.Areas.AreaRestrita.Models.Lote
         [Display(Name = "Máquina*")]
         public int IdMaquina { get; set; }
 
+        [Display(Name = "Tipo Carta")]
+        public string TipoCarta { get { return "Atributo - Fração Não-Conforme"; } }
+
         public List<SelectListItem> ListarMaquinas
         {
             get
@@ -50,7 +53,7 @@ namespace Projeto.Web.Areas.AreaRestrita.Models.Lote
                     lista.Add(new SelectListItem() { Text = item.CodInterno + " - " + item.Modelo, Value = item.IdMaquina.ToString() });
                 }
                 return lista;
-            }            
+            }
         }
     }
 }
