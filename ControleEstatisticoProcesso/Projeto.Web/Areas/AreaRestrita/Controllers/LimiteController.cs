@@ -24,6 +24,7 @@ namespace Projeto.Web.Areas.AreaRestrita.Controllers
             {
                 model.ConsultaLoteAmostra = ConsultarAmostras();
 
+                model.CadastroLoteAmostra.TipoCarta = new LimiteControle().TipoCarta;
                 model.CadastroLoteAmostra.UsuarioAnalise = (Usuario)Session["usuario"];
                 model.CadastroLoteAmostra.TipoLote = Entidades.Enuns.TipoLote.Amostra;
                 model.CadastroLoteAmostra.QtdTotal = model.ConsultaLoteAmostra.Count > 0 ? model.ConsultaLoteAmostra.FirstOrDefault().QtdTotal : 0;

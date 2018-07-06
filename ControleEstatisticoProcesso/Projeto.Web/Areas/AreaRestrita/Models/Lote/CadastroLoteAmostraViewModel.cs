@@ -41,7 +41,7 @@ namespace Projeto.Web.Areas.AreaRestrita.Models.Lote
         public int IdMaquina { get; set; }
 
         [Display(Name = "Tipo Carta")]
-        public string TipoCarta { get { return "Atributo - Fração Não-Conforme"; } }
+        public string TipoCarta { get; set; }
 
         public List<SelectListItem> ListarMaquinas
         {
