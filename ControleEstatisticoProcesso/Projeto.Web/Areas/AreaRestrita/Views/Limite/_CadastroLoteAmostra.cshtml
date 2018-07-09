@@ -20,7 +20,7 @@
         <div class="col-md-2">
             @Html.DisplayNameFor(m => m.IdMaquina)
             @Html.DropDownListFor(m => m.IdMaquina, Model.ListarMaquinas, "Selecione", new { @class = "form-control", @id = "txtMaquina" })
-            @Html.ValidationMessageFor(m => m.UsuarioAnalise.Nome, "", new { @class = "text-danger" })
+            @Html.ValidationMessageFor(m => m.IdMaquina, "", new { @class = "text-danger" })
         </div>
 
         <div class="col-md-2">
@@ -40,7 +40,7 @@
     <div class="row">
         <div class="col-md-2">
             @Html.DisplayNameFor(m => m.IdLote)
-            @Html.TextBoxFor(m => m.IdLote, new { @class = "form-control", type = "number", min = "1", step = "1", @id = "txtLote" })
+            @Html.TextBoxFor(m => m.IdLote, new { @class = "form-control", type = "number", min = 1, max = 10000, step = "1", @id = "txtLote" })
             @Html.ValidationMessageFor(m => m.IdLote, "", new { @class = "text-danger" })
         </div>
 

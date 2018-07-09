@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using Projeto.Entidades;
+using Projeto.Web.Areas.AreaRestrita.Models;
 using System.Web.Mvc;
 
 namespace Projeto.Web.Areas.AreaRestrita.Controllers
@@ -11,7 +9,7 @@ namespace Projeto.Web.Areas.AreaRestrita.Controllers
         // GET: AreaRestrita/CEP
         public ActionResult Index()
         {
-            return View();
+            return View(new UsuarioViewModel() { Usuario = (Usuario)Session["usuario"] });
         }
     }
 }

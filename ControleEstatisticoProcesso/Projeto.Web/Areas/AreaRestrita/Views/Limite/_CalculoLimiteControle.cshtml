@@ -1,10 +1,15 @@
 ﻿<p><strong>Calcular Limite Controle</strong></p>
 
 <div class="row">
-    <input type="button" id="btnCalcularLimite" class="btn btn-primary col-md-offset-10" value="Calcular Limite" />
+    <div class="col-md-2">
+        <input type="button" id="btnCalcularLimite" class="btn btn-primary" value="Calcular Limite" />
+    </div>
+    <div class="col-md-offset-10">
+        <input type="button" id="btnCadastrarLimite" class="btn btn-success" value="Cadastrar Limite" style="display:none" />
+    </div>
 </div>
 
-<div class="row">
+<div class="row" style="margin-top:15px">
     <label id="lblLimites"></label>
     <div class="col-md-12">
         <div id="linechart_material" style="height:400px"></div>

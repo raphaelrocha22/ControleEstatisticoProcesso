@@ -77,25 +77,50 @@ namespace Projeto.Web.Areas.AreaRestrita.Controllers
             return CadastroAmostras();
         }
 
+        [HttpPost]
         public JsonResult CalculoLimiteControle()
         {
-            var model = new LimiteControleViewModel();
-            model.LimiteControle = new LimiteControle();
-
-            model.ConsultaLoteAmostra = ConsultarAmostras();
-
-            double totalDefeitos = model.ConsultaLoteAmostra.Sum(m => m.QtdReprovada);
-            double qtdAmostras = model.ConsultaLoteAmostra.Count();
-            double qtdInspecao = model.ConsultaLoteAmostra.FirstOrDefault().QtdTotal;
-            double p = Math.Round(totalDefeitos / (qtdAmostras * qtdInspecao), 4);
-
-            model.LimiteControle.LC = Convert.ToDecimal(p);
-            model.LimiteControle.LSC = Math.Round(Convert.ToDecimal(p + 3 * Math.Sqrt((p * (1 - p)) / qtdAmostras)),4);
-            model.LimiteControle.LIC = Math.Round(Convert.ToDecimal(p - 3 * Math.Sqrt((p * (1 - p)) / qtdAmostras)),4);
-
-            return Json(model);
+            try
+            {
+                return Json(CalcularLimiteControle());
+            }
+            catch (Exception e)
+            {
+                return Json(e);
+            }
         }
 
+        [HttpPost]
+        public JsonResult CadastroLimiteControle()
+        {
+            try
+            {
+                var model = CalcularLimiteControle();
+                
+                var l = new LimiteControle();
+                l.DataCalculo = DateTime.Now;
+                l.LSC = model.LimiteControle.LSC;
+                l.LC = model.LimiteControle.LC;
+                l.LIC = model.LimiteControle.LIC;
+                l.Usuario = (Usuario)Session["usuario"];
+                l.Ativo = true;
+
+                l.Lotes = new List<Lote>();
+                foreach (var item in model.ConsultaLoteAmostra)
+                {
+                    l.Lotes.Add(new Lote() { IdLote = item.IdLote });
+                }
+
+                new LimiteDAL().CadastrarLimiteControle(l);
+
+                return Json(true);
+            }
+            catch (Exception e)
+            {
+                return Json(e);
+            }
+        }
+        
         private List<ConsultaLoteAmostraViewModel> ConsultarAmostras()
         {
             try
@@ -119,6 +144,33 @@ namespace Projeto.Web.Areas.AreaRestrita.Controllers
                     lista.Add(m);
                 }
                 return lista;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
+        private LimiteControleViewModel CalcularLimiteControle()
+        {
+            try
+            {
+                var model = new LimiteControleViewModel();
+                model.LimiteControle = new LimiteControle();
+
+                model.ConsultaLoteAmostra = ConsultarAmostras();
+
+                double totalDefeitos = model.ConsultaLoteAmostra.Sum(m => m.QtdReprovada);
+                double qtdAmostras = model.ConsultaLoteAmostra.Count();
+                double qtdInspecao = model.ConsultaLoteAmostra.FirstOrDefault().QtdTotal;
+                double p = Math.Round(totalDefeitos / (qtdAmostras * qtdInspecao), 4);
+
+                model.LimiteControle.LC = Convert.ToDecimal(p);
+                model.LimiteControle.LSC = Math.Round(Convert.ToDecimal(p + 3 * Math.Sqrt((p * (1 - p)) / qtdAmostras)), 4);
+                model.LimiteControle.LIC = Math.Round(Convert.ToDecimal(p - 3 * Math.Sqrt((p * (1 - p)) / qtdAmostras)), 4);
+
+                return model;
             }
             catch (Exception e)
             {

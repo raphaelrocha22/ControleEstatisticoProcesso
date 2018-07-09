@@ -17,5 +17,6 @@ namespace Projeto.Entidades
         public string TipoCarta { get { return "Atributo - Fração Não-Conforme"; } }
 
         public List<Lote> Lotes { get; set; }
+        public Usuario Usuario { get; set; }
     }
 }

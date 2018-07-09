@@ -16,11 +16,12 @@ namespace Projeto.DAL.Persistencia
             {
                 AbrirConexao();
 
-                string query = "insert into Lote (idLote, dataHora, qtdTotal, qtdReprovada, percentualReprovado, comentario, idUsuarioAnalise, tipoLote,idMaquina) " +
-                    "values (@idLote, @dataHora, @qtdTotal, @qtdReprovada, @percentualReprovado, @comentario, @idUsuarioAnalise, @tipoLote,@idMaquina); " +
-                    "insert into TempLote values (@idLote)";
+                tr = con.BeginTransaction();
 
-                cmd = new SqlCommand(query, con);
+                string query = "insert into Lote (idLote, dataHora, qtdTotal, qtdReprovada, percentualReprovado, comentario, idUsuarioAnalise, tipoLote,idMaquina) " +
+                    "values (@idLote, @dataHora, @qtdTotal, @qtdReprovada, @percentualReprovado, @comentario, @idUsuarioAnalise, @tipoLote,@idMaquina)";
+
+                cmd = new SqlCommand(query, con, tr);
                 cmd.Parameters.AddWithValue("@idLote", l.IdLote);
                 cmd.Parameters.AddWithValue("@dataHora", l.DataHora);
                 cmd.Parameters.AddWithValue("@qtdTotal", l.QtdTotal);
@@ -32,9 +33,15 @@ namespace Projeto.DAL.Persistencia
                 cmd.Parameters.AddWithValue("@idMaquina", l.Maquina.IdMaquina);
                 cmd.ExecuteNonQuery();
 
+                cmd = new SqlCommand("insert into TempLote values (@idLote)", con, tr);
+                cmd.Parameters.AddWithValue("@idLote", l.IdLote);
+                cmd.ExecuteNonQuery();
+
+                tr.Commit();
             }
             catch (Exception e)
             {
+                tr.Rollback();
                 throw e;
             }
             finally

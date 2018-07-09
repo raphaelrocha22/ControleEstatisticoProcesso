@@ -28,7 +28,7 @@ namespace Projeto.Web.Controllers
 
                     if (u != null)
                     {
-                        var ticket = new FormsAuthenticationTicket(u.Login, false, 60);
+                        var ticket = new FormsAuthenticationTicket(u.Login, false,1000000);
                         var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, FormsAuthentication.Encrypt(ticket));
                         Response.Cookies.Add(cookie);
 

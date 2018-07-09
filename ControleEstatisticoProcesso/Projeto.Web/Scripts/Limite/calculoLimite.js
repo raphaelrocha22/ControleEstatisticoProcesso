@@ -2,20 +2,22 @@
 
     google.charts.load('current', { 'packages': ['line'] });
     google.charts.setOnLoadCallback(drawChart);
-
-
+       
     $('#btnCalcularLimite').click(function () {
 
-        $.ajax({
-            type: 'POST',
-            url: '/AreaRestrita/Limite/CalculoLimiteControle',
-            success: function (lista) {
-                drawChart(lista);
-            },
-            error: function (e) {
-                alert(e.status);
-            },
-        });
+        if (confirm("Deseja calcular os Limites de Controle?")) {
+            $.ajax({
+                type: 'POST',
+                url: '/AreaRestrita/Limite/CalculoLimiteControle',
+                success: function (lista) {
+                    $('#btnCadastrarLimite').show();
+                    drawChart(lista);
+                },
+                error: function (e) {
+                    messageBox(e.status);
+                },
+            });
+        }  
     });
 });
 
@@ -56,4 +58,4 @@ function drawChart(lista) {
 
     var chart = new google.charts.Line(document.getElementById('linechart_material'));
     chart.draw(data, google.charts.Line.convertOptions(options));
-}
+};

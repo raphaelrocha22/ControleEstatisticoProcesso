@@ -8,7 +8,7 @@
     }
 
     $('#formCadastro').submit(function (e) {
-        if ($('#txtQtdReprovada').val() > $('#txtQtdTotal').val()) {
+        if (parseInt($('#txtQtdReprovada').val()) > parseInt($('#txtQtdTotal').val())) {
             messageBox_OK("A quantidade de itens reprovados não pode ser maior que a quantidade total de itens");
             e.preventDefault();
         }

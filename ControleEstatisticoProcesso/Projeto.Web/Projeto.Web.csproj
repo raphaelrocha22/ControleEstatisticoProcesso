@@ -401,6 +401,7 @@
     <Content Include="Scripts\jquery-ui-1.12.1.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
     <Content Include="Scripts\Limite\cadastroAmostras.js" />
+    <Content Include="Scripts\Limite\cadastroLimite.js" />
     <Content Include="Scripts\Limite\calculoLimite.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Web.config" />
@@ -420,6 +421,7 @@
     <Compile Include="Areas\AreaRestrita\Models\Users\CadastroViewModel.cs" />
     <Compile Include="Areas\AreaRestrita\Models\Users\ConsultaViewModel.cs" />
     <Compile Include="Areas\AreaRestrita\Models\Users\EdicaoViewModel.cs" />
+    <Compile Include="Areas\AreaRestrita\Models\UsuarioViewModel.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
