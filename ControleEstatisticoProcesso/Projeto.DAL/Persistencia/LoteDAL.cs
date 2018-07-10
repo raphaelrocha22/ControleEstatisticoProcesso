@@ -84,20 +84,25 @@ namespace Projeto.DAL.Persistencia
             }
         }
 
-
-        public List<Lote> ConsultarAmostras()
+        public List<Lote> ConsultarAmostras(int? idLimite = null)
         {
             try
             {
                 AbrirConexao();
 
-                string query = "select l.idLote, dataHora, qtdTotal, qtdReprovada, percentualReprovado,comentario,u.nome,l.tipoLote, m.idMaquina, m.codInterno from Lote l " +
+                string query =
+                    "select l.idLote, dataHora, qtdTotal, qtdReprovada, percentualReprovado,comentario, " +
+                    "u.nome,l.tipoLote, m.idMaquina, m.codInterno from Lote l " +
                     "inner join Usuario u on l.idUsuarioAnalise = u.idUsuario " +
                     "inner join Maquina m on l.idMaquina = m.idMaquina " +
-                    "inner join TempLote tp on l.idLote = tp.idLote " +
+                    "where " +
+                    "(@idLimite is null or l.idLimite = @idLimite) " +
+                    "and " +
+                    "(@idLimite is not null or l.idLote in (select idLote from TempLote)) " +
                     "order by dataHora";
 
                 cmd = new SqlCommand(query, con);
+                cmd.Parameters.AddWithNullValue("@idLimite", idLimite);
                 dr = cmd.ExecuteReader();
 
                 var lista = new List<Lote>();
@@ -133,6 +138,6 @@ namespace Projeto.DAL.Persistencia
             }
         }
 
-        
+
     }
 }

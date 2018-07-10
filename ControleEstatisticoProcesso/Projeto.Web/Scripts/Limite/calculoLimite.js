@@ -15,7 +15,7 @@
                 },
                 error: function (e) {
                     messageBox(e.status);
-                },
+                }
             });
         }  
     });

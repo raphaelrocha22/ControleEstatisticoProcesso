@@ -1,5 +1,8 @@
 ﻿$(document).ready(function () {
 
+    $('#txtLote').attr('value', "");
+    $('#txtQtdReprovada').attr('value', "");
+
     if ($('#txtMaquina').val() != "" && $('#txtMaquina').val() != "0" && $('#txtQtdTotal').val() != "" && $('#txtQtdTotal').val() != "0") {
         desabilitar();
     }

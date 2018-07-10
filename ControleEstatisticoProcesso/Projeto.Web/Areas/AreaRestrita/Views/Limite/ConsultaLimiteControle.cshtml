@@ -1,0 +1,78 @@
+﻿@model IEnumerable<Projeto.Web.Areas.AreaRestrita.Models.Limite.ConsultaLimiteControleViewModel>
+
+@{
+    ViewBag.Title = "ConsultaLimiteControle";
+    Layout = "~/Areas/AreaRestrita/Views/_Shared/_Layout.cshtml";
+}
+
+<title>Listagem de Limites Controle</title>
+
+<h4>Consulta Limite Controle</h4>
+
+<p>
+    @Html.ActionLink("Cadastrar novo Limite Controle", "CadastroAmostras")<br />
+</p>
+
+
+@if (TempData["Sucesso"] != null)
+{
+    if ((bool)TempData["Sucesso"])
+    {
+        <div class="alert alert-success text-center form-group-lg"><strong>@TempData["Mensagem"]</strong></div>
+    }
+    else
+    {
+        <div class="alert alert-danger text-center form-group-lg"><strong>@TempData["Mensagem"]</strong></div>
+    }
+}
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.DataCalculo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LSC)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LC)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LIC)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UsuarioAnalise)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Ativo)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataCalculo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LSC)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LC)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LIC)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UsuarioAnalise)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ativo)
+            </td>
+            <td>
+                <a href="/AreaRestrita/Limite/ConsultaAmostras/@item.idLimite" target="_blank">Amostras</a>
+            </td>
+        </tr>
+    }
+
+</table>

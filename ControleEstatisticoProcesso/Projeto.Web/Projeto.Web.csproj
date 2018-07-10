@@ -313,6 +313,8 @@
     <Content Include="Areas\AreaRestrita\Views\Limite\_CadastroLoteAmostra.cshtml" />
     <Content Include="Areas\AreaRestrita\Views\Limite\_ConsultaLoteAmostra.cshtml" />
     <Content Include="Areas\AreaRestrita\Views\Limite\_CalculoLimiteControle.cshtml" />
+    <Content Include="Areas\AreaRestrita\Views\Limite\ConsultaLimiteControle.cshtml" />
+    <Content Include="Areas\AreaRestrita\Views\Limite\ConsultaAmostras.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.min.js" />
@@ -403,6 +405,7 @@
     <Content Include="Scripts\Limite\cadastroAmostras.js" />
     <Content Include="Scripts\Limite\cadastroLimite.js" />
     <Content Include="Scripts\Limite\calculoLimite.js" />
+    <Content Include="Scripts\Limite\consultaAmostras.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -412,6 +415,7 @@
     <Compile Include="Areas\AreaRestrita\Controllers\CEPController.cs" />
     <Compile Include="Areas\AreaRestrita\Controllers\LimiteController.cs" />
     <Compile Include="Areas\AreaRestrita\Controllers\UsuarioController.cs" />
+    <Compile Include="Areas\AreaRestrita\Models\Limite\ConsultaLimiteControleViewModel.cs" />
     <Compile Include="Areas\AreaRestrita\Models\Limite\LimiteControleViewModel.cs" />
     <Compile Include="Areas\AreaRestrita\Models\Limite\MetodosPartial.cs" />
     <Compile Include="Areas\AreaRestrita\Models\Lote\CadastroLoteAmostraViewModel.cs" />

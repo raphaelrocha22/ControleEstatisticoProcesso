@@ -60,7 +60,7 @@ namespace Projeto.Web.Areas.AreaRestrita.Controllers
                     l.UsuarioAnalise.IdUsuario = model.UsuarioAnalise.IdUsuario;
                     l.TipoLote = model.TipoLote;
                     l.Maquina.IdMaquina = model.IdMaquina;
-                    
+
                     new LoteDAL().CadastrarLoteAmostra(l);
 
                     TempData["Sucesso"] = true;
@@ -82,7 +82,7 @@ namespace Projeto.Web.Areas.AreaRestrita.Controllers
         {
             try
             {
-                return Json(CalcularLimiteControle());
+                return Json(CalcularLimiteControle(id));
             }
             catch (Exception e)
             {
@@ -96,7 +96,7 @@ namespace Projeto.Web.Areas.AreaRestrita.Controllers
             try
             {
                 var model = CalcularLimiteControle();
-                
+
                 var l = new LimiteControle();
                 l.DataCalculo = DateTime.Now;
                 l.LSC = model.LimiteControle.LSC;
@@ -120,13 +120,45 @@ namespace Projeto.Web.Areas.AreaRestrita.Controllers
                 return Json(e);
             }
         }
+
+        public ActionResult ConsultaLimiteControle()
+        {
+            var lista = new List<ConsultaLimiteControleViewModel>();
+
+            foreach (var item in new LimiteDAL().ConsultarLimiteControle())
+            {
+                var l = new ConsultaLimiteControleViewModel();
+                l.idLimite = item.IdLimite;
+                l.DataCalculo = item.DataCalculo;
+                l.LSC = item.LSC;
+                l.LC = item.LC;
+                l.LIC = item.LIC;
+                l.UsuarioAnalise = item.Usuario.Nome;
+                l.Ativo = item.Ativo;
+
+                lista.Add(l);
+            }
+            return View(lista);
+        }
+
+        public ActionResult ConsultaAmostras(int id)
+        {
+            var model = new MetodosPartial();
+            model.ConsultaLoteAmostra = ConsultarAmostras(id);
+
+            return View(model);
+        }
+
+
         
-        private List<ConsultaLoteAmostraViewModel> ConsultarAmostras()
+
+
+        private List<ConsultaLoteAmostraViewModel> ConsultarAmostras(int? idLimite = null)
         {
             try
             {
                 var lista = new List<ConsultaLoteAmostraViewModel>();
-                foreach (var item in new LoteDAL().ConsultarAmostras())
+                foreach (var item in new LoteDAL().ConsultarAmostras(idLimite))
                 {
                     var m = new ConsultaLoteAmostraViewModel();
                     m.Maquina = new Maquina();
@@ -135,7 +167,7 @@ namespace Projeto.Web.Areas.AreaRestrita.Controllers
                     m.DataHora = item.DataHora.ToString("dd/MM/yyyy HH:mm");
                     m.QtdTotal = item.QtdTotal;
                     m.QtdReprovada = item.QtdReprovada;
-                    m.PercentualReprovado = Math.Round(item.PercentualReprovado*100, 2);
+                    m.PercentualReprovado = Math.Round(item.PercentualReprovado * 100, 2);
                     m.Comentario = item.Comentario;
                     m.UsuarioAnalise = item.UsuarioAnalise.Nome;
                     m.TipoLote = item.TipoLote;
@@ -150,7 +182,6 @@ namespace Projeto.Web.Areas.AreaRestrita.Controllers
                 throw e;
             }
         }
-
 
         private LimiteControleViewModel CalcularLimiteControle()
         {

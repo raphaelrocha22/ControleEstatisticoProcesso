@@ -1,4 +1,5 @@
 ﻿using Projeto.DAL.Conexoes;
+using Projeto.DAL.Repositorio;
 using Projeto.Entidades;
 using System;
 using System.Collections.Generic;
@@ -43,7 +44,7 @@ namespace Projeto.DAL.Persistencia
                 }
 
                 new SqlCommand("delete from TempLote", con, tr).ExecuteNonQuery();
-                
+
                 tr.Commit();
             }
             catch (Exception e)
@@ -56,5 +57,50 @@ namespace Projeto.DAL.Persistencia
                 FecharConexao();
             }
         }
+
+        public List<LimiteControle> ConsultarLimiteControle(bool? ativo = null)
+        {
+            try
+            {
+                AbrirConexao();
+
+                var lista = new List<LimiteControle>();
+
+                string query = "select lc.idLimite, lc.dataCalculo, lc.LSC, lc.LC, lc.LIC, u.nome, lc.ativo from LimiteControle lc " +
+                    "inner join Usuario u on lc.idUsuarioAprovacao = u.idUsuario " +
+                    "where lc.ativo = @ativo or @ativo is null";
+
+                cmd = new SqlCommand(query, con);
+                cmd.Parameters.AddWithNullValue("@ativo", ativo);
+                dr = cmd.ExecuteReader();
+
+                while (dr.Read())
+                {
+                    var l = new LimiteControle();
+                    l.Usuario = new Usuario();
+
+                    l.IdLimite = (int)dr["idLimite"];
+                    l.DataCalculo = (DateTime)dr["dataCalculo"];
+                    l.LSC = (decimal)dr["LSC"];
+                    l.LC = (decimal)dr["LC"];
+                    l.LIC = (decimal)dr["LIC"];
+                    l.Usuario.Nome = dr["nome"].ToString();
+                    l.Ativo = (bool)dr["ativo"];
+
+                    lista.Add(l);
+                }
+
+                return lista;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            finally
+            {
+                FecharConexao();
+            }
+        }
+
     }
 }
