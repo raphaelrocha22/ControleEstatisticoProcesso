@@ -14,7 +14,7 @@
             url: '/AreaRestrita/Limite/CalculoLimiteControle',
             data: "id=" + @Model.LimiteControle.IdLimite,
             success: function (lista) {
-                drawChart(lista);
+                drawChart(@model);
             },
             error: function (e) {
                 messageBox(e.status);

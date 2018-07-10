@@ -11,7 +11,7 @@ namespace Projeto.Web.Areas.AreaRestrita.Controllers
         public ActionResult Index()
         {
             Usuario u = (Usuario)Session["usuario"];
-            
+
             if (u != null)
             {
                 return View(new UsuarioViewModel() { Usuario = u });
@@ -19,7 +19,7 @@ namespace Projeto.Web.Areas.AreaRestrita.Controllers
             else
             {
                 return RedirectToAction("Login", "Home", new { area = "" });
-            }            
+            }
         }
     }
 }

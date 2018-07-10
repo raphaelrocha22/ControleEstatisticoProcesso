@@ -82,7 +82,7 @@ namespace Projeto.Web.Areas.AreaRestrita.Controllers
         {
             try
             {
-                return Json(CalcularLimiteControle(id));
+                return Json(CalcularLimiteControle());
             }
             catch (Exception e)
             {
@@ -145,10 +145,10 @@ namespace Projeto.Web.Areas.AreaRestrita.Controllers
         {
             var model = new MetodosPartial();
             model.ConsultaLoteAmostra = ConsultarAmostras(id);
+            model.LimiteControle = new LimiteDAL().ConsultarLimiteControle(null,id).FirstOrDefault();
 
             return View(model);
         }
-
 
         
 

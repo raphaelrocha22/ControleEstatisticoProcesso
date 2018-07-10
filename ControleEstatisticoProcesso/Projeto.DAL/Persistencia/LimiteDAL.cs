@@ -58,7 +58,7 @@ namespace Projeto.DAL.Persistencia
             }
         }
 
-        public List<LimiteControle> ConsultarLimiteControle(bool? ativo = null)
+        public List<LimiteControle> ConsultarLimiteControle(bool? ativo = null, int? idLimite = null)
         {
             try
             {
@@ -68,10 +68,11 @@ namespace Projeto.DAL.Persistencia
 
                 string query = "select lc.idLimite, lc.dataCalculo, lc.LSC, lc.LC, lc.LIC, u.nome, lc.ativo from LimiteControle lc " +
                     "inner join Usuario u on lc.idUsuarioAprovacao = u.idUsuario " +
-                    "where lc.ativo = @ativo or @ativo is null";
+                    "where (lc.ativo = @ativo or @ativo is null) and (lc.idLimite = @idLimite or @idLimite is null)";
 
                 cmd = new SqlCommand(query, con);
                 cmd.Parameters.AddWithNullValue("@ativo", ativo);
+                cmd.Parameters.AddWithNullValue("@idLimite", idLimite);
                 dr = cmd.ExecuteReader();
 
                 while (dr.Read())

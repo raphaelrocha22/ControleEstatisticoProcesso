@@ -39,6 +39,7 @@ namespace Projeto.Web.Models
 
         public override string[] GetRolesForUser(string username)
         {
+
             Usuario u = (Usuario)HttpContext.Current.Session["usuario"];
             string perfil = u.Login.Equals(username) ? u.Perfil.ToString() : string.Empty;
 

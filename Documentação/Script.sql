@@ -17,6 +17,9 @@ constraint Maquina_codInterno_UQ unique(codInterno)
 )
 go
 
+insert into Maquina (codInterno, modelo, fabricante, setor) values ('HC-MC1','SL-506','Satisloh','HC')
+go
+
 create table Usuario(
 idUsuario int identity(100,1),
 dataCadastro datetime not null,
@@ -55,7 +58,7 @@ dataHora datetime not null,
 qtdTotal int not null,
 qtdReprovada int not null,
 percentualReprovado decimal(5,4) not null,
-status varchar(30) not null,
+status varchar(30) null,
 comentario varchar(250),
 idUsuarioAnalise int not null,
 idUsuarioAprovacao int,
