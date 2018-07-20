@@ -9,22 +9,18 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        $.ajax({
-            type: 'POST',
-            url: '/AreaRestrita/Limite/CalculoLimiteControle',
-            data: "id=" + @Model.LimiteControle.IdLimite,
-            success: function (lista) {
-                drawChart(@model);
-            },
-            error: function (e) {
-                messageBox(e.status);
-            }
+        $('#btnCarregarGrafico').click(function () {
+            var lista = @Html.Raw(Json.Encode(Model));
+            drawChart(lista);
         });
     });
+
 </script>
 
 <h4>Amostras usadas para cálculo do Limite de Controle</h4>
 <hr />
+
+<input type="button" class="btn btn-sm" id="btnCarregarGrafico" value="Carregar Gráfico" /><br /><br />
 
 <div class="row">
     <label id="lblLimites"></label>
