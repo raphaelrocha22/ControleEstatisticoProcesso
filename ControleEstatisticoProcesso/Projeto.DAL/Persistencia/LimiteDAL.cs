@@ -103,5 +103,33 @@ namespace Projeto.DAL.Persistencia
             }
         }
 
+        public void DefinirLimiteAtivo(int idLimite)
+        {
+            try
+            {
+                AbrirConexao();
+
+                tr = con.BeginTransaction();
+
+                new SqlCommand("update LimiteControle set ativo = 0", con, tr).ExecuteNonQuery();
+
+                string query = "update LimiteControle set ativo = 1 where idLimite = @idLimite";
+                cmd = new SqlCommand(query, con, tr);
+                cmd.Parameters.AddWithValue("@idLimite",idLimite);
+                cmd.ExecuteNonQuery();
+
+                tr.Commit();
+            }
+            catch (Exception e)
+            {
+                tr.Rollback();
+                throw e;
+            }
+            finally
+            {
+                FecharConexao();
+            }
+        }
+
     }
 }

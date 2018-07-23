@@ -5,6 +5,8 @@
     Layout = "~/Areas/AreaRestrita/Views/_Shared/_Layout.cshtml";
 }
 
+<script src="~/Scripts/Limite/ativarLimite.js"></script>
+
 <title>Listagem de Limites Controle</title>
 
 <h4>Consulta Limite Controle</h4>
@@ -70,8 +72,8 @@
                 @Html.DisplayFor(modelItem => item.Ativo)
             </td>
             <td>
-                <a href="/AreaRestrita/Limite/ConsultaAmostras/@item.idLimite" class="btn btn-default btn-sm">Amostras</a>
-                <a href="" class="btn btn-info btn-sm">Ativar Limite</a>
+                <a href="/AreaRestrita/Limite/ConsultaAmostras/@item.idLimite" target="_blank" class="btn btn-default btn-sm">Amostras</a>
+                <input type="button" class="btn btn-info btn-sm" value="Ativar Limite" id="bntAtivarLimite" onclick="AtivarLimite(@item.idLimite)"/>
             </td>
         </tr>
     }

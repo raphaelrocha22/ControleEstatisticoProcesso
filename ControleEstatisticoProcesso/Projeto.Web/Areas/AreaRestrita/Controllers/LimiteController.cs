@@ -150,6 +150,20 @@ namespace Projeto.Web.Areas.AreaRestrita.Controllers
             return View(model);
         }
 
+        public JsonResult DefinirLimiteAtivo(int id)
+        {
+            try
+            {
+                new LimiteDAL().DefinirLimiteAtivo(id);
+                return Json(true);
+
+            }
+            catch (Exception e)
+            {
+                return Json($"Erro {e.Message}");
+            }
+        }
+
         
 
 
