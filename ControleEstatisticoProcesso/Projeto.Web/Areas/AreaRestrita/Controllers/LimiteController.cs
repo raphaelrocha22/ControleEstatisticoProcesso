@@ -16,7 +16,7 @@ namespace Projeto.Web.Areas.AreaRestrita.Controllers
         // GET: AreaRestrita/Lote
         public ActionResult CadastroAmostras()
         {
-            var model = new MetodosPartial();
+            var model = new LimiteControleViewModel();
             model.CadastroLoteAmostra = new CadastroLoteAmostraViewModel();
             model.CadastroLoteAmostra.UsuarioAnalise = new Usuario();
 
@@ -41,7 +41,7 @@ namespace Projeto.Web.Areas.AreaRestrita.Controllers
 
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public ActionResult CadastroAmostras(CadastroLoteAmostraViewModel model)
+        public ActionResult CadastroAmostras(LimiteControleViewModel model)
         {
             try
             {
@@ -51,20 +51,20 @@ namespace Projeto.Web.Areas.AreaRestrita.Controllers
                     l.UsuarioAnalise = new Usuario();
                     l.Maquina = new Maquina();
 
-                    l.IdLote = model.IdLote;
+                    l.IdLote = model.CadastroLoteAmostra.IdLote;
                     l.DataHora = DateTime.Now;
-                    l.QtdTotal = model.QtdTotal;
-                    l.QtdReprovada = model.QtdReprovada;
+                    l.QtdTotal = model.CadastroLoteAmostra.QtdTotal;
+                    l.QtdReprovada = model.CadastroLoteAmostra.QtdReprovada;
                     l.PercentualReprovado = Convert.ToDecimal(l.QtdReprovada) / Convert.ToDecimal(l.QtdTotal);
-                    l.Comentario = model.Comentario;
-                    l.UsuarioAnalise.IdUsuario = model.UsuarioAnalise.IdUsuario;
-                    l.TipoLote = model.TipoLote;
-                    l.Maquina.IdMaquina = model.IdMaquina;
+                    l.Comentario = model.CadastroLoteAmostra.Comentario;
+                    l.UsuarioAnalise.IdUsuario = model.CadastroLoteAmostra.UsuarioAnalise.IdUsuario;
+                    l.TipoLote = model.CadastroLoteAmostra.TipoLote;
+                    l.Maquina.IdMaquina = model.CadastroLoteAmostra.IdMaquina;
 
                     new LoteDAL().CadastrarLoteAmostra(l);
 
                     TempData["Sucesso"] = true;
-                    TempData["Mensagem"] = $"Lote {model.IdLote} cadastrado com sucesso";
+                    TempData["Mensagem"] = $"Lote {model.CadastroLoteAmostra.IdLote} cadastrado com sucesso";
 
                     ModelState.Clear();
                 }
@@ -143,7 +143,7 @@ namespace Projeto.Web.Areas.AreaRestrita.Controllers
 
         public ActionResult ConsultaAmostras(int id)
         {
-            var model = new MetodosPartial();
+            var model = new LimiteControleViewModel();
             model.ConsultaLoteAmostra = ConsultarAmostras(id);
             model.LimiteControle = new LimiteDAL().ConsultarLimiteControle(null,id).FirstOrDefault();
 

@@ -9,7 +9,10 @@ namespace Projeto.Web.Areas.AreaRestrita.Models.Limite
 {
     public class LimiteControleViewModel
     {
+        public CadastroLoteAmostraViewModel CadastroLoteAmostra { get; set; }
         public List<ConsultaLoteAmostraViewModel> ConsultaLoteAmostra { get; set; }
+
+
         public LimiteControle LimiteControle { get; set; }
     }
 }

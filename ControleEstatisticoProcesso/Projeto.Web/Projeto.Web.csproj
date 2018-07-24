@@ -310,9 +310,6 @@
     <Content Include="Areas\AreaRestrita\Views\_ViewStart.cshtml" />
     <Content Include="Areas\AreaRestrita\Views\Usuario\Edicao.cshtml" />
     <Content Include="Areas\AreaRestrita\Views\Limite\CadastroAmostras.cshtml" />
-    <Content Include="Areas\AreaRestrita\Views\Limite\_CadastroLoteAmostra.cshtml" />
-    <Content Include="Areas\AreaRestrita\Views\Limite\_ConsultaLoteAmostra.cshtml" />
-    <Content Include="Areas\AreaRestrita\Views\Limite\_CalculoLimiteControle.cshtml" />
     <Content Include="Areas\AreaRestrita\Views\Limite\ConsultaLimiteControle.cshtml" />
     <Content Include="Areas\AreaRestrita\Views\Limite\ConsultaAmostras.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
@@ -416,9 +413,8 @@
     <Compile Include="Areas\AreaRestrita\Controllers\CEPController.cs" />
     <Compile Include="Areas\AreaRestrita\Controllers\LimiteController.cs" />
     <Compile Include="Areas\AreaRestrita\Controllers\UsuarioController.cs" />
-    <Compile Include="Areas\AreaRestrita\Models\Limite\ConsultaLimiteControleViewModel.cs" />
     <Compile Include="Areas\AreaRestrita\Models\Limite\LimiteControleViewModel.cs" />
-    <Compile Include="Areas\AreaRestrita\Models\Limite\MetodosPartial.cs" />
+    <Compile Include="Areas\AreaRestrita\Models\Limite\ConsultaLimiteControleViewModel.cs" />
     <Compile Include="Areas\AreaRestrita\Models\Lote\CadastroLoteAmostraViewModel.cs" />
     <Compile Include="Areas\AreaRestrita\Models\Lote\CadastroLoteProducaoViewModel.cs" />
     <Compile Include="Areas\AreaRestrita\Models\Lote\ConsultaLoteAmostraViewModel.cs" />

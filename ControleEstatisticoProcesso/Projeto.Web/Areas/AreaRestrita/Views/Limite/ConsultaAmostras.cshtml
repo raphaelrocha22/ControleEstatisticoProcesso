@@ -1,4 +1,4 @@
-﻿@model Projeto.Web.Areas.AreaRestrita.Models.Limite.MetodosPartial
+﻿@model Projeto.Web.Areas.AreaRestrita.Models.Limite.LimiteControleViewModel
 @{
     Layout = "~/Areas/AreaRestrita/Views/_Shared/_Layout.cshtml";
 }
@@ -31,6 +31,77 @@
 </div>
 
 <div class="row" style="margin-top:15px">
-    @Html.Partial("_ConsultaLoteAmostra", Model.ConsultaLoteAmostra)
+
+    <p><strong>Lotes Cadastrados</strong></p>
+
+    <table class="table table-hover">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ConsultaLoteAmostra.FirstOrDefault().IdLote)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ConsultaLoteAmostra.FirstOrDefault().DataHora)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ConsultaLoteAmostra.FirstOrDefault().QtdTotal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ConsultaLoteAmostra.FirstOrDefault().QtdReprovada)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ConsultaLoteAmostra.FirstOrDefault().PercentualReprovado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ConsultaLoteAmostra.FirstOrDefault().UsuarioAnalise)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ConsultaLoteAmostra.FirstOrDefault().TipoLote)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ConsultaLoteAmostra.FirstOrDefault().Maquina)
+            </th>
+            <th class="hidden">
+                @Html.DisplayNameFor(model => model.ConsultaLoteAmostra.FirstOrDefault().Comentario)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.ConsultaLoteAmostra)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdLote)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DataHora)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.QtdTotal)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.QtdReprovada)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PercentualReprovado)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UsuarioAnalise)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TipoLote)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Maquina.CodInterno)
+                </td>
+                <td class="hidden">
+                    @Html.DisplayFor(modelItem => item.Comentario)
+                </td>
+                <td>
+                    <button class="btn btn-default btn-sm" onclick="messageBox('@item.Comentario')">Comentário</button>
+                </td>
+            </tr>
+        }
+
+    </table>
 </div>
 
