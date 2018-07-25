@@ -166,7 +166,6 @@ namespace Projeto.Web.Areas.AreaRestrita.Controllers
 
         
 
-
         private List<ConsultaLoteAmostraViewModel> ConsultarAmostras(int? idLimite = null)
         {
             try

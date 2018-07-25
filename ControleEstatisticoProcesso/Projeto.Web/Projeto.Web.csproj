@@ -312,6 +312,7 @@
     <Content Include="Areas\AreaRestrita\Views\Limite\CadastroAmostras.cshtml" />
     <Content Include="Areas\AreaRestrita\Views\Limite\ConsultaLimiteControle.cshtml" />
     <Content Include="Areas\AreaRestrita\Views\Limite\ConsultaAmostras.cshtml" />
+    <Content Include="Areas\AreaRestrita\Views\Lote\CadastroLotesProducao.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.min.js" />
@@ -412,12 +413,15 @@
     <Compile Include="Areas\AreaRestrita\AreaRestritaAreaRegistration.cs" />
     <Compile Include="Areas\AreaRestrita\Controllers\CEPController.cs" />
     <Compile Include="Areas\AreaRestrita\Controllers\LimiteController.cs" />
+    <Compile Include="Areas\AreaRestrita\Controllers\LoteController.cs" />
     <Compile Include="Areas\AreaRestrita\Controllers\UsuarioController.cs" />
     <Compile Include="Areas\AreaRestrita\Models\Limite\LimiteControleViewModel.cs" />
     <Compile Include="Areas\AreaRestrita\Models\Limite\ConsultaLimiteControleViewModel.cs" />
     <Compile Include="Areas\AreaRestrita\Models\Lote\CadastroLoteAmostraViewModel.cs" />
     <Compile Include="Areas\AreaRestrita\Models\Lote\CadastroLoteProducaoViewModel.cs" />
     <Compile Include="Areas\AreaRestrita\Models\Lote\ConsultaLoteAmostraViewModel.cs" />
+    <Compile Include="Areas\AreaRestrita\Models\Lote\ConsultaLoteProducaoViewModel.cs" />
+    <Compile Include="Areas\AreaRestrita\Models\Lote\LoteProducaoViewModel.cs" />
     <Compile Include="Areas\AreaRestrita\Models\Users\AlterarSenhaViewModel.cs" />
     <Compile Include="Areas\AreaRestrita\Models\Users\CadastroViewModel.cs" />
     <Compile Include="Areas\AreaRestrita\Models\Users\ConsultaViewModel.cs" />

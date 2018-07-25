@@ -135,9 +135,6 @@
                 <th>
                     @Html.DisplayNameFor(model => model.ConsultaLoteAmostra.FirstOrDefault().Maquina)
                 </th>
-                <th class="hidden">
-                    @Html.DisplayNameFor(model => model.ConsultaLoteAmostra.FirstOrDefault().Comentario)
-                </th>
                 <th></th>
             </tr>
 
@@ -168,11 +165,9 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Maquina.CodInterno)
                     </td>
-                    <td class="hidden">
-                        @Html.DisplayFor(modelItem => item.Comentario)
-                    </td>
                     <td>
-                        <button class="btn btn-default btn-sm" onclick="messageBox('@item.Comentario')">Comentário</button>
+                        <button class="btn btn-default btn-sm" onclick="messageBox('@item.Comentario')" title="Informações relatadas no momento da inspeção">Comentário</button>
+                        <button class="btn btn-danger btn-sm" onclick="ExcluirAmostra(@item.IdLote)" title="Excluir amostra"><span class="glyphicon glyphicon-trash"></span></button>
                     </td>
                 </tr>
             }

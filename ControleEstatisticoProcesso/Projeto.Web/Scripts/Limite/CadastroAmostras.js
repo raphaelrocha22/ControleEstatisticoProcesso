@@ -49,3 +49,22 @@ function CalcularPercent() {
 
     $('#txtPercentReprovacao').val(((qtdReprovado / qtdTotal) * 100).toFixed(2) + "%");
 }
+
+function ExcluirAmostra(id) {
+
+    if (confirm("Deseja realmente excluir essa amostra?")) {
+
+        $.ajax({
+            type: 'POST',
+            url: '/AreaRestrita/Lote/ExcluirLote',
+            data: 'id=' + id,
+            success: function (message) {
+                confirm("Amostra excluída com sucesso");
+                window.location.href = '/AreaRestrita/Limite/CadastroAmostras';
+            },
+            error: function (e) {
+                messageBox(e.status);
+            }
+        });
+    };
+}

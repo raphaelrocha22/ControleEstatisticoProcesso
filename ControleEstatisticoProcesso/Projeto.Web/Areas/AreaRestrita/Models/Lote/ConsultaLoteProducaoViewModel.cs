@@ -8,12 +8,13 @@ using System.Web;
 
 namespace Projeto.Web.Areas.AreaRestrita.Models.Lote
 {
-    public class CadastroLoteProducaoViewModel:CadastroLoteAmostraViewModel
+    public class ConsultaLoteProducaoViewModel:ConsultaLoteAmostraViewModel
     {
-        [Required(ErrorMessage = "Campo obrigatório")]
-        public Usuario UsuarioAprovacao { get; set; }
-
-        [Range(1, int.MaxValue, ErrorMessage = "Campo obrigatório")]
         public Status Status { get; set; }
+
+        [Display(Name = "Usuário Aprovação")]
+        public string UsuarioAprovacao { get; set; }
+
+        public LimiteControle LimiteControle { get; set; }
     }
 }
