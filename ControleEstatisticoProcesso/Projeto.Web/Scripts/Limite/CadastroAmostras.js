@@ -1,7 +1,10 @@
 ﻿$(document).ready(function () {
 
-    $('#txtLote').attr('value', "");
-    $('#txtQtdReprovada').attr('value', "");
+    if ($('#txtLote').val() == "0")
+        $('#txtLote').attr('value', "");
+
+    if ($('#txtQtdReprovada').val() == "0")
+        $('#txtQtdReprovada').attr('value', "");
 
     if ($('#txtMaquina').val() != "" && $('#txtMaquina').val() != "0" && $('#txtQtdTotal').val() != "" && $('#txtQtdTotal').val() != "0") {
         desabilitar();

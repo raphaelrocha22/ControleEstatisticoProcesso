@@ -405,6 +405,7 @@
     <Content Include="Scripts\Limite\cadastroLimite.js" />
     <Content Include="Scripts\Limite\calculoLimite.js" />
     <Content Include="Scripts\Limite\consultaAmostras.js" />
+    <Content Include="Scripts\Lote\cadastroProducao.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Web.config" />
   </ItemGroup>

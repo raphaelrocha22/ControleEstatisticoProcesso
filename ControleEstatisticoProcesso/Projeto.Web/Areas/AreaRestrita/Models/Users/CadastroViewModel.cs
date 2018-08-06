@@ -29,7 +29,6 @@ namespace Projeto.Web.Areas.AreaRestrita.Models.Users
         [Range(1, int.MaxValue, ErrorMessage = "Selecione o Perfil")]
         public PerfilUsuario Perfil { get; set; }
 
-        [Range(1, int.MaxValue, ErrorMessage = "Selecione o Setor")]
         public Setor Setor { get; set; }
     }
 }

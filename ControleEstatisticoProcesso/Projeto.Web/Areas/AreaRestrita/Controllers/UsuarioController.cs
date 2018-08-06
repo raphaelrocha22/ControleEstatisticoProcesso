@@ -35,6 +35,7 @@ namespace Projeto.Web.Areas.AreaRestrita.Controllers
         {
             try
             {
+                ModelState.Remove("Setor");
                 if (ModelState.IsValid)
                 {
                     var u = new Usuario();
@@ -63,6 +64,7 @@ namespace Projeto.Web.Areas.AreaRestrita.Controllers
         }
 
         [Authorize(Roles = "Administrador")]
+        [HttpGet]
         public ActionResult Consulta()
         {
             var lista = new List<ConsultaViewModel>();
@@ -74,12 +76,24 @@ namespace Projeto.Web.Areas.AreaRestrita.Controllers
                 model.Nome = item.Nome;
                 model.Login = item.Login;
                 model.Perfil = item.Perfil;
-                model.Setor = item.Setor;
+                model.Setor = item.Setor != 0 ? item.Setor.ToString() : string.Empty;
                 model.Ativo = item.Ativo;
 
                 lista.Add(model);
             }
             return View(lista);
+        }
+
+        public Usuario Consulta(string login, string senha)
+        {
+            try
+            {
+                return new UsuarioDAL().ConsultarUsuario(login.ToLower(), senha);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
         [Authorize(Roles = "Administrador")]
@@ -113,6 +127,7 @@ namespace Projeto.Web.Areas.AreaRestrita.Controllers
         {
             try
             {
+                ModelState.Remove("Setor");
                 if (ModelState.IsValid)
                 {
                     var u = new Usuario();

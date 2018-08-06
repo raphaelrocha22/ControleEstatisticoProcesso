@@ -2,7 +2,8 @@
 @{
     Layout = "~/Areas/AreaRestrita/Views/_Shared/_Layout.cshtml";
 }
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<script src="~/Scripts/Lote/cadastroProducao.js"></script>
 
 <title>Cadastro Lotes</title>
 
@@ -46,16 +47,16 @@
                 </div>
 
                 <div class="col-md-2">
-                    @Html.DisplayNameFor(m => m.CadastroLoteProducao.IdMaquina)
-                    @Html.DropDownListFor(m => m.CadastroLoteProducao.IdMaquina, Model.CadastroLoteProducao.ListarMaquinas, "Selecione", new { @class = "form-control", @id = "txtMaquina" })
-                    @Html.ValidationMessageFor(m => m.CadastroLoteProducao.IdMaquina, "", new { @class = "text-danger" })
-                </div>
-
-                <div class="col-md-2">
                     @Html.DisplayNameFor(m => m.CadastroLoteProducao.UsuarioAnalise)
                     @Html.HiddenFor(m => m.CadastroLoteProducao.UsuarioAnalise.IdUsuario)
                     @Html.TextBoxFor(m => m.CadastroLoteProducao.UsuarioAnalise.Nome, new { @class = "form-control", @id = "txtUsuarioAnalise", @readonly = "readonly" })
                     @Html.ValidationMessageFor(m => m.CadastroLoteProducao.UsuarioAnalise.Nome, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="col-md-2">
+                    @Html.DisplayNameFor(m => m.CadastroLoteProducao.IdMaquina)
+                    @Html.DropDownListFor(m => m.CadastroLoteProducao.IdMaquina, Model.CadastroLoteProducao.ListarMaquinas, "Selecione", new { @class = "form-control", @id = "txtMaquina" })
+                    @Html.ValidationMessageFor(m => m.CadastroLoteProducao.IdMaquina, "", new { @class = "text-danger" })
                 </div>
 
                 <div class="col-md-1">
@@ -63,7 +64,6 @@
                     @Html.TextBoxFor(m => m.CadastroLoteProducao.QtdTotal, new { @class = "form-control", type = "number", min = "1", step = "1", @id = "txtQtdTotal" })
                     @Html.ValidationMessageFor(m => m.CadastroLoteProducao.QtdTotal, "", new { @class = "text-danger" })
                 </div>
-
             </div>
 
             <div class="row">
@@ -85,7 +85,7 @@
                 </div>
 
                 <div class="col-md-2">
-                    Status.
+                    Status
                     <input type="text" class="form-control" id="txtStatus" readonly />
                 </div>
 
@@ -99,124 +99,48 @@
                     <br />
                     <input type="submit" class="btn btn-success" value="Cadastrar" id="btnCadastrar" />
                 </div>
-
             </div>
 
             <div class="row">
+                @Html.HiddenFor(m => m.LimiteControle.IdLimite)
+                @Html.HiddenFor(m => m.LimiteControle.LSC, new { @id = "lblLSC" })
+                @Html.HiddenFor(m => m.LimiteControle.LC)
+                @Html.HiddenFor(m => m.LimiteControle.LIC, new { @id = "lblLIC" })
                 @Html.LabelFor(m => m.LimiteControle.LSC): @Html.DisplayTextFor(m => m.LimiteControle.LSC) / @Html.LabelFor(m => m.LimiteControle.LC): @Html.DisplayTextFor(m => m.LimiteControle.LC) / @Html.LabelFor(m => m.LimiteControle.LIC): @Html.DisplayTextFor(m => m.LimiteControle.LIC)
+            </div>
+
+
+            <!-- Janela modal -->
+            <div id="modalAprovacao" class="modal fade">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header bg-primary">
+                            <h3>Aprovação de Lote</h3>
+                            Este lote está reprovado estatísticamente.
+                            Se deseja aprová-lo, insira abaixo as credenciais do usuário responsável pela aprovação do Lote.
+                            Caso contrário, deixe os campos abaixo em branco e clique sobre o botão <strong>Cadastrar Lote</strong>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    @Html.DisplayNameFor(m => m.CadastroLoteProducao.UsuarioAprovacao.Login)
+                                    @Html.TextBoxFor(m => m.CadastroLoteProducao.UsuarioAprovacao.Login, new { @class = "form-control", @id = "txtUsuarioAprovacaoLogin" })
+                                </div>
+                                <div class="col-md-6">
+                                    @Html.DisplayNameFor(m => m.CadastroLoteProducao.UsuarioAprovacao.Senha)
+                                    @Html.PasswordFor(m => m.CadastroLoteProducao.UsuarioAprovacao.Senha, new { @class = "form-control", @id = "txtUsuarioAprovacaoSenha" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="submit" id="btnReprovarLote" class="btn btn-danger" value="Reprovar Lote" data-reprovar="false" onclick="$('#btnReprovarLote').data('reprovar',true)">
+                            <input type="submit" id="btncadastroModal" class="btn btn-success" value="Cadastrar Lote">
+                        </div>
+                    </div>
+                </div>
             </div>
         }
     </div>
-    <hr />
 }
 
-@if (Model.ConsultaLoteProducao != null)
-{
-    <div class="row">
-        <p><strong>Lotes Cadastrados</strong></p>
 
-        <table class="table table-hover">
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.ConsultaLoteProducao.FirstOrDefault().IdLote)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ConsultaLoteProducao.FirstOrDefault().DataHora)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ConsultaLoteProducao.FirstOrDefault().QtdTotal)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ConsultaLoteProducao.FirstOrDefault().QtdReprovada)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ConsultaLoteProducao.FirstOrDefault().PercentualReprovado)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ConsultaLoteProducao.FirstOrDefault().Status)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ConsultaLoteProducao.FirstOrDefault().UsuarioAnalise)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ConsultaLoteProducao.FirstOrDefault().UsuarioAprovacao)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ConsultaLoteProducao.FirstOrDefault().LimiteControle.LSC)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ConsultaLoteProducao.FirstOrDefault().LimiteControle.LC)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ConsultaLoteProducao.FirstOrDefault().LimiteControle.LIC)
-                </th>
-                <th></th>
-            </tr>
-
-            @foreach (var item in Model.ConsultaLoteProducao)
-            {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IdLote)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DataHora)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.QtdTotal)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.QtdReprovada)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PercentualReprovado)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Status)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.UsuarioAnalise)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.UsuarioAprovacao)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LimiteControle.LSC)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LimiteControle.LC)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LimiteControle.LIC)
-                </td>
-                <td>
-                    <button class="btn btn-default btn-sm" onclick="messageBox('@item.Comentario')">Comentário</button>
-                    <button class="btn btn-danger btn-sm" onclick="ExcluirAmostra(@item.IdLote)" title="Excluir amostra"><span class="glyphicon glyphicon-trash"></span></button>
-                </td>
-            </tr>
-            }
-
-        </table>
-    </div>
-    <hr />
-}
-
-<div class="row">
-    <p><strong>Calcular Limite Controle</strong></p>
-
-    <div class="row">
-        <div class="col-md-2">
-            <input type="button" id="btnCalcularLimite" class="btn btn-primary" value="Calcular Limite" />
-        </div>
-        <div class="col-md-offset-10">
-            <input type="button" id="btnCadastrarLimite" class="btn btn-success" value="Cadastrar Limite" style="display:none" />
-        </div>
-    </div>
-
-    <div class="row" style="margin-top:15px">
-        <label id="lblLimites"></label>
-        <div class="col-md-12">
-            <div id="linechart_material" style="height:400px"></div>
-        </div>
-    </div>
-</div>

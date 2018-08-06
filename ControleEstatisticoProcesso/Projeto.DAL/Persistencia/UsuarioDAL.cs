@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace Projeto.DAL.Persistencia
 {
-    public class UsuarioDAL:Conexao
+    public class UsuarioDAL : Conexao
     {
         public void CadastrarUsuario(Usuario u)
         {
@@ -24,7 +24,7 @@ namespace Projeto.DAL.Persistencia
                 cmd.Parameters.AddWithValue("@login", u.Login);
                 cmd.Parameters.AddWithValue("@senha", Criptografia.EncriptarSenha(u.Senha));
                 cmd.Parameters.AddWithValue("@perfil", u.Perfil.ToString());
-                cmd.Parameters.AddWithValue("@setor", u.Setor.ToString());
+                cmd.Parameters.AddWithNullValue("@setor", u.Setor.ToString());
                 cmd.Parameters.AddWithValue("@ativo", u.Ativo);
                 cmd.ExecuteNonQuery();
             }

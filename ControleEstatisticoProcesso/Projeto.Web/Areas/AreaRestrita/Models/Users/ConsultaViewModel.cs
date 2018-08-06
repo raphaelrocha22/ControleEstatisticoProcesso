@@ -12,7 +12,7 @@ namespace Projeto.Web.Areas.AreaRestrita.Models.Users
         public string Nome { get; set; }
         public string Login { get; set; }
         public PerfilUsuario Perfil { get; set; }
-        public Setor Setor { get; set; }
+        public string Setor { get; set; }
         public bool Ativo { get; set; }
     }
 }

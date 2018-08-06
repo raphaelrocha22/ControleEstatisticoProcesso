@@ -56,8 +56,8 @@ namespace Projeto.DAL.Persistencia
             {
                 AbrirConexao();
 
-                string query = "insert into Lote (idLote, dataHora, qtdTotal, qtdReprovada, percentualReprovado, status, comentario, idUsuarioAnalise, idUsuarioAprovacao, tipoLote, idLimite) " +
-                    "values (@idLote, @dataHora, @qtdTotal, @qtdReprovada, @percentualReprovado, @status, @comentario, @idUsuarioAnalise, @idUsuarioAprovacao, @tipoLote, @idLimite)";
+                string query = "insert into Lote (idLote, dataHora, qtdTotal, qtdReprovada, percentualReprovado, status, comentario, idUsuarioAnalise, idUsuarioAprovacao, tipoLote, idLimite, idMaquina) " +
+                    "values (@idLote, @dataHora, @qtdTotal, @qtdReprovada, @percentualReprovado, @status, @comentario, @idUsuarioAnalise, @idUsuarioAprovacao, @tipoLote, @idLimite, @idMaquina)";
 
                 cmd = new SqlCommand(query, con);
                 cmd.Parameters.AddWithValue("@idLote", l.IdLote);
@@ -65,14 +65,14 @@ namespace Projeto.DAL.Persistencia
                 cmd.Parameters.AddWithValue("@qtdTotal", l.QtdTotal);
                 cmd.Parameters.AddWithValue("@qtdReprovada", l.QtdReprovada);
                 cmd.Parameters.AddWithValue("@percentualReprovado", l.PercentualReprovado);
-                cmd.Parameters.AddWithValue("@status", l.Status);
-                cmd.Parameters.AddWithValue("@comentario", l.Comentario);
+                cmd.Parameters.AddWithValue("@status", l.Status.ToString());
+                cmd.Parameters.AddWithNullValue("@comentario", l.Comentario);
                 cmd.Parameters.AddWithValue("@idUsuarioAnalise", l.UsuarioAnalise.IdUsuario);
-                cmd.Parameters.AddWithValue("@idUsuarioAprovacao", l.UsuarioAprovacao.IdUsuario);
-                cmd.Parameters.AddWithValue("@tipoLote", l.TipoLote);
+                cmd.Parameters.AddWithNullValue("@idUsuarioAprovacao", l.UsuarioAprovacao != null ? l.UsuarioAprovacao.IdUsuario : (object)null);
+                cmd.Parameters.AddWithValue("@tipoLote", l.TipoLote.ToString());
                 cmd.Parameters.AddWithValue("@idLimite", l.LimiteControle.IdLimite);
+                cmd.Parameters.AddWithValue("@idMaquina", l.Maquina.IdMaquina);
                 cmd.ExecuteNonQuery();
-
             }
             catch (Exception e)
             {
@@ -99,10 +99,12 @@ namespace Projeto.DAL.Persistencia
                     "(@idLimite is null or l.idLimite = @idLimite) " +
                     "and " +
                     "(@idLimite is not null or l.idLote in (select idLote from TempLote)) " +
+                    "and tipoLote = @tipoLote " +
                     "order by dataHora";
 
                 cmd = new SqlCommand(query, con);
                 cmd.Parameters.AddWithNullValue("@idLimite", idLimite);
+                cmd.Parameters.AddWithNullValue("@tipoLote", TipoLote.Amostra.ToString());
                 dr = cmd.ExecuteReader();
 
                 var lista = new List<Lote>();
@@ -138,27 +140,30 @@ namespace Projeto.DAL.Persistencia
             }
         }
 
-        public List<Lote> ConsultarLotesProducao(int? idLimite = null)
+        public List<Lote> ConsultarLotesProducao(int? idLimite = null, int? qtd = int.MaxValue)
         {
             try
             {
                 AbrirConexao();
 
-                string query =
-                    "select l.idLote, dataHora, qtdTotal, qtdReprovada, percentualReprovado, status, comentario, " +
-                    "u_analise.idUsuario 'usuarioAnalise', u_aprovacao.idUsuario 'usuarioAprovacao', lc.LSC, lc.LC, lc.LIC, l.tipoLote, m.idMaquina, m.codInterno from Lote l " +
+                string query = qtd != int.MaxValue ? $"select Top {qtd} " : "select ";
+                query +=
+                    "l.idLote, dataHora, qtdTotal, qtdReprovada, percentualReprovado, status, comentario, " +
+                    "u_analise.nome 'usuarioAnalise', u_aprovacao.nome 'usuarioAprovacao', lc.LSC, lc.LC, lc.LIC, l.tipoLote, m.idMaquina, m.codInterno from Lote l " +
                     "inner join Usuario u_analise on l.idUsuarioAnalise = u_analise.idUsuario " +
-                    "left join Usuario u_aprovacao on l.idUsuarioAnalise = u_aprovacao.idUsuario " +
+                    "left join Usuario u_aprovacao on l.idUsuarioAprovacao = u_aprovacao.idUsuario " +
                     "inner join Maquina m on l.idMaquina = m.idMaquina " +
                     "inner join LimiteControle lc on l.idLimite = lc.idLimite " +
                     "where " +
                     "(@idLimite is null or l.idLimite = @idLimite) " +
                     "and " +
                     "(@idLimite is not null or l.idLote in (select idLote from TempLote)) " +
+                    "and tipoLote = @tipoLote " +
                     "order by dataHora";
 
                 cmd = new SqlCommand(query, con);
                 cmd.Parameters.AddWithNullValue("@idLimite", idLimite);
+                cmd.Parameters.AddWithNullValue("@tipoLote", TipoLote.Producao.ToString());
                 dr = cmd.ExecuteReader();
 
                 var lista = new List<Lote>();
@@ -190,6 +195,26 @@ namespace Projeto.DAL.Persistencia
                     lista.Add(l);
                 }
                 return lista;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            finally
+            {
+                FecharConexao();
+            }
+        }
+
+        public bool VerificarLoteExiste(int idLote)
+        {
+            try
+            {
+                AbrirConexao();
+
+                cmd = new SqlCommand("select idLote from Lote where idLote = @idLote",con);
+                cmd.Parameters.AddWithValue("@idLote", idLote);
+                return Convert.ToInt32(cmd.ExecuteScalar()) > 0;
             }
             catch (Exception e)
             {

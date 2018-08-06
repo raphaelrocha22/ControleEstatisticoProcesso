@@ -10,10 +10,9 @@ namespace Projeto.Web.Areas.AreaRestrita.Models.Lote
 {
     public class CadastroLoteProducaoViewModel:CadastroLoteAmostraViewModel
     {
-        [Required(ErrorMessage = "Campo obrigatório")]
         public Usuario UsuarioAprovacao { get; set; }
 
-        [Range(1, int.MaxValue, ErrorMessage = "Campo obrigatório")]
+        //[Range(1, int.MaxValue, ErrorMessage = "Campo obrigatório")]
         public Status Status { get; set; }
     }
 }

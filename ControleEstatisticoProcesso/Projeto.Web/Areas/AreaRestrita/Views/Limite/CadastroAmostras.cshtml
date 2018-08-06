@@ -50,16 +50,16 @@
                 </div>
 
                 <div class="col-md-2">
-                    @Html.DisplayNameFor(m => m.CadastroLoteAmostra.IdMaquina)
-                    @Html.DropDownListFor(m => m.CadastroLoteAmostra.IdMaquina, Model.CadastroLoteAmostra.ListarMaquinas, "Selecione", new { @class = "form-control", @id = "txtMaquina" })
-                    @Html.ValidationMessageFor(m => m.CadastroLoteAmostra.IdMaquina, "", new { @class = "text-danger" })
-                </div>
-
-                <div class="col-md-2">
                     @Html.DisplayNameFor(m => m.CadastroLoteAmostra.UsuarioAnalise)
                     @Html.HiddenFor(m => m.CadastroLoteAmostra.UsuarioAnalise.IdUsuario)
                     @Html.TextBoxFor(m => m.CadastroLoteAmostra.UsuarioAnalise.Nome, new { @class = "form-control", @id = "txtUsuarioAnalise", @readonly = "readonly" })
                     @Html.ValidationMessageFor(m => m.CadastroLoteAmostra.UsuarioAnalise.Nome, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="col-md-2">
+                    @Html.DisplayNameFor(m => m.CadastroLoteAmostra.IdMaquina)
+                    @Html.DropDownListFor(m => m.CadastroLoteAmostra.IdMaquina, Model.CadastroLoteAmostra.ListarMaquinas, "Selecione", new { @class = "form-control", @id = "txtMaquina" })
+                    @Html.ValidationMessageFor(m => m.CadastroLoteAmostra.IdMaquina, "", new { @class = "text-danger" })
                 </div>
 
                 <div class="col-md-1">
