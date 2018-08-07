@@ -20,16 +20,16 @@ namespace Projeto.Web.Areas.AreaRestrita.Controllers
 
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public ActionResult CadastroLotesProducao(LoteProducaoViewModel model)
+        public ActionResult CadastroLotesProducao(CadastroLoteProducaoViewModel model)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    if (new LoteDAL().VerificarLoteExiste(model.CadastroLoteProducao.IdLote))
-                        throw new Exception($"Um lote com a numeração {model.CadastroLoteProducao.IdLote} já foi cadastrado no sistema");
+                    if (new LoteDAL().VerificarLoteExiste(model.IdLote))
+                        throw new Exception($"Um lote com a numeração {model.IdLote} já foi cadastrado no sistema");
 
-                    if (model.CadastroLoteProducao.QtdReprovada > model.CadastroLoteProducao.QtdTotal)
+                    if (model.QtdReprovada > model.QtdTotal)
                         throw new Exception("A quantidade de itens reprovados não pode ser maior que a quantidade total de itens");
 
                     var l = new Lote();
@@ -39,24 +39,24 @@ namespace Projeto.Web.Areas.AreaRestrita.Controllers
                     l.LimiteControle = new LimiteControle();
 
                     l.DataHora = DateTime.Now;
-                    l.TipoLote = model.CadastroLoteProducao.TipoLote;
-                    l.Maquina.IdMaquina = model.CadastroLoteProducao.IdMaquina;
-                    l.UsuarioAnalise = model.CadastroLoteProducao.UsuarioAnalise;
-                    l.IdLote = model.CadastroLoteProducao.IdLote;
-                    l.QtdTotal = model.CadastroLoteProducao.QtdTotal;
-                    l.QtdReprovada = model.CadastroLoteProducao.QtdReprovada;
+                    l.TipoLote = model.TipoLote;
+                    l.Maquina.IdMaquina = model.IdMaquina;
+                    l.UsuarioAnalise = model.UsuarioAnalise;
+                    l.IdLote = model.IdLote;
+                    l.QtdTotal = model.QtdTotal;
+                    l.QtdReprovada = model.QtdReprovada;
                     l.PercentualReprovado = Convert.ToDecimal(l.QtdReprovada) / Convert.ToDecimal(l.QtdTotal);
-                    l.Comentario = model.CadastroLoteProducao.Comentario;
+                    l.Comentario = model.Comentario;
                     l.LimiteControle = model.LimiteControle;
                     if (l.PercentualReprovado >= model.LimiteControle.LIC && l.PercentualReprovado <= model.LimiteControle.LSC)
                     {
                         l.Status = Status.Aprovado;
                     }
-                    else if (model.CadastroLoteProducao.UsuarioAprovacao.Login != null && model.CadastroLoteProducao.UsuarioAprovacao.Senha != null)
+                    else if (model.UsuarioAprovacao.Login != null && model.UsuarioAprovacao.Senha != null)
                     {
                         l.Status = Status.AprovadoSupervisao;
 
-                        Usuario u = new UsuarioController().Consulta(model.CadastroLoteProducao.UsuarioAprovacao.Login, model.CadastroLoteProducao.UsuarioAprovacao.Senha);
+                        Usuario u = new UsuarioController().Consulta(model.UsuarioAprovacao.Login, model.UsuarioAprovacao.Senha);
                         if (u != null && (u.Perfil.Equals(PerfilUsuario.Supervisor) || u.Perfil.Equals(PerfilUsuario.Gerente) || u.Perfil.Equals(PerfilUsuario.Administrador)))
                             l.UsuarioAprovacao = u;
                         else
@@ -70,7 +70,7 @@ namespace Projeto.Web.Areas.AreaRestrita.Controllers
                     new LoteDAL().CadastrarLoteProducao(l);
 
                     TempData["Sucesso"] = true;
-                    TempData["Mensagem"] = $"Lote {model.CadastroLoteProducao.IdLote} cadastrado com sucesso";
+                    TempData["Mensagem"] = $"Lote {model.IdLote} cadastrado com sucesso";
 
                     ModelState.Clear();
                 }
@@ -81,7 +81,7 @@ namespace Projeto.Web.Areas.AreaRestrita.Controllers
                 TempData["Mensagem"] = $"Erro: {e.Message}";
             }
 
-            return View(CarregarModel(model.CadastroLoteProducao));
+            return View(CarregarModel(model));
         }
 
         public JsonResult ExcluirLote(int id)
@@ -97,23 +97,48 @@ namespace Projeto.Web.Areas.AreaRestrita.Controllers
             }
         }
 
-        private LoteProducaoViewModel CarregarModel(CadastroLoteProducaoViewModel dados)
+        public ActionResult ConsultaLoteProducao()
         {
-            var model = new LoteProducaoViewModel();
-            model.CadastroLoteProducao = new CadastroLoteProducaoViewModel();
-            model.CadastroLoteProducao.UsuarioAnalise = new Usuario();
+            return View(new ConsultaLoteProducaoViewModel());
+        }
+
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public ActionResult ConsultaLoteProducao(ConsultaLoteProducaoViewModel model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    model.Lotes = ConsultarLotesProducao(model);
+                }
+            }
+            catch (Exception e)
+            {
+                TempData["Sucesso"] = false;
+                TempData["Mensagem"] = $"Erro: {e.Message}";
+            }
+            return View(model);
+        }
+
+
+
+        private CadastroLoteProducaoViewModel CarregarModel(CadastroLoteProducaoViewModel dados)
+        {
+            var model = new CadastroLoteProducaoViewModel();
+            model.UsuarioAnalise = new Usuario();
 
             try
             {
                 if (dados != null)
                 {
-                    model.CadastroLoteProducao.QtdTotal = dados.QtdTotal;
-                    model.CadastroLoteProducao.IdMaquina = dados.IdMaquina;
+                    model.QtdTotal = dados.QtdTotal;
+                    model.IdMaquina = dados.IdMaquina;
                 }
 
-                model.CadastroLoteProducao.TipoCarta = new LimiteControle().TipoCarta;
-                model.CadastroLoteProducao.UsuarioAnalise = (Usuario)Session["usuario"];
-                model.CadastroLoteProducao.TipoLote = TipoLote.Producao;
+                model.TipoCarta = new LimiteControle().TipoCarta;
+                model.UsuarioAnalise = (Usuario)Session["usuario"];
+                model.TipoLote = TipoLote.Producao;
                 model.LimiteControle = new LimiteDAL().ConsultarLimiteControle(true).FirstOrDefault();
             }
             catch (Exception e)
@@ -124,12 +149,12 @@ namespace Projeto.Web.Areas.AreaRestrita.Controllers
             return model;
         }
 
-        private List<ConsultaLoteProducaoViewModel> ConsultarLotesProducao(int? idLimite = null, int? qtd = int.MaxValue)
+        private List<ConsultaLoteProducaoViewModel> ConsultarLotesProducao(ConsultaLoteProducaoViewModel model)
         {
             try
             {
-                var lista = new List<ConsultaLoteProducaoViewModel>();
-                foreach (var item in new LoteDAL().ConsultarLotesProducao(idLimite, qtd))
+                model.Lotes = new List<ConsultaLoteProducaoViewModel>();
+                foreach (var item in new LoteDAL().ConsultarLotesProducao(model.DataInicio, model.DataFim, model.Status))
                 {
                     var m = new ConsultaLoteProducaoViewModel();
                     m.Maquina = new Maquina();
@@ -150,9 +175,9 @@ namespace Projeto.Web.Areas.AreaRestrita.Controllers
                     m.TipoLote = item.TipoLote;
                     m.Maquina = item.Maquina;
 
-                    lista.Add(m);
+                    model.Lotes.Add(m);
                 }
-                return lista;
+                return model.Lotes;
             }
             catch (Exception e)
             {

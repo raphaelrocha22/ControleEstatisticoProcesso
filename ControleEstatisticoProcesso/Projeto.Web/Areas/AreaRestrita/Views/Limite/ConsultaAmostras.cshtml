@@ -7,12 +7,10 @@
 <script src="~/Scripts/Limite/calculoLimite.js"></script>
 
 <script type="text/javascript">
-    $(document).ready(function () {
-        $('#btnCarregarGrafico').click(function () {
-            var lista = @Html.Raw(Json.Encode(Model));
-            drawChart(lista);
-        });
-    });
+
+    window.onload = function () {
+        drawChart(@Html.Raw(Json.Encode(Model)));
+    };
 
 </script>
 
@@ -20,8 +18,6 @@
 
 <h4>Amostras usadas para cálculo do Limite de Controle</h4>
 <hr />
-
-<input type="button" class="btn btn-sm" id="btnCarregarGrafico" value="Carregar Gráfico" /><br /><br />
 
 <div class="row">
     <label id="lblLimites"></label>

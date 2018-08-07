@@ -1,4 +1,4 @@
-﻿@model Projeto.Web.Areas.AreaRestrita.Models.Lote.LoteProducaoViewModel
+﻿@model Projeto.Web.Areas.AreaRestrita.Models.Lote.CadastroLoteProducaoViewModel
 @{
     Layout = "~/Areas/AreaRestrita/Views/_Shared/_Layout.cshtml";
 }
@@ -27,120 +27,115 @@
     }
 }
 
-@if (Model.CadastroLoteProducao != null)
-{
-    <div class="row">
-        <p><strong>Cadastrar Lote</strong></p>
-        @using (Html.BeginForm("CadastroLotesProducao", "Lote", FormMethod.Post, new { id = "formCadastro" }))
-        {
-            @Html.AntiForgeryToken()
+<div class="row">
+    <p><strong>Cadastrar Lote</strong></p>
+    @using (Html.BeginForm("CadastroLotesProducao", "Lote", FormMethod.Post, new { id = "formCadastro" }))
+    {
+        @Html.AntiForgeryToken()
 
-            <div class="row" style="margin-bottom:20px">
-                <div class="col-md-3">
-                    @Html.DisplayNameFor(m => m.CadastroLoteProducao.TipoCarta)
-                    @Html.TextBoxFor(m => m.CadastroLoteProducao.TipoCarta, new { @class = "form-control", @id = "txtTipoCarta", @readonly = "readonly" })
-                </div>
-
-                <div class="col-md-2">
-                    @Html.DisplayNameFor(m => m.CadastroLoteProducao.TipoLote)
-                    @Html.TextBoxFor(m => m.CadastroLoteProducao.TipoLote, new { @class = "form-control", @id = "txtTipoLote", @readonly = "readonly" })
-                </div>
-
-                <div class="col-md-2">
-                    @Html.DisplayNameFor(m => m.CadastroLoteProducao.UsuarioAnalise)
-                    @Html.HiddenFor(m => m.CadastroLoteProducao.UsuarioAnalise.IdUsuario)
-                    @Html.TextBoxFor(m => m.CadastroLoteProducao.UsuarioAnalise.Nome, new { @class = "form-control", @id = "txtUsuarioAnalise", @readonly = "readonly" })
-                    @Html.ValidationMessageFor(m => m.CadastroLoteProducao.UsuarioAnalise.Nome, "", new { @class = "text-danger" })
-                </div>
-
-                <div class="col-md-2">
-                    @Html.DisplayNameFor(m => m.CadastroLoteProducao.IdMaquina)
-                    @Html.DropDownListFor(m => m.CadastroLoteProducao.IdMaquina, Model.CadastroLoteProducao.ListarMaquinas, "Selecione", new { @class = "form-control", @id = "txtMaquina" })
-                    @Html.ValidationMessageFor(m => m.CadastroLoteProducao.IdMaquina, "", new { @class = "text-danger" })
-                </div>
-
-                <div class="col-md-1">
-                    @Html.DisplayNameFor(m => m.CadastroLoteProducao.QtdTotal)
-                    @Html.TextBoxFor(m => m.CadastroLoteProducao.QtdTotal, new { @class = "form-control", type = "number", min = "1", step = "1", @id = "txtQtdTotal" })
-                    @Html.ValidationMessageFor(m => m.CadastroLoteProducao.QtdTotal, "", new { @class = "text-danger" })
-                </div>
+        <div class="row" style="margin-bottom:20px">
+            <div class="col-md-3">
+                @Html.DisplayNameFor(m => m.TipoCarta)
+                @Html.TextBoxFor(m => m.TipoCarta, new { @class = "form-control", @id = "txtTipoCarta", @readonly = "readonly" })
             </div>
 
-            <div class="row">
-                <div class="col-md-1">
-                    @Html.DisplayNameFor(m => m.CadastroLoteProducao.IdLote)
-                    @Html.TextBoxFor(m => m.CadastroLoteProducao.IdLote, new { @class = "form-control", type = "number", min = 1, max = 10000, step = "1", @id = "txtLote" })
-                    @Html.ValidationMessageFor(m => m.CadastroLoteProducao.IdLote, "", new { @class = "text-danger" })
-                </div>
-
-                <div class="col-md-2">
-                    @Html.DisplayNameFor(m => m.CadastroLoteProducao.QtdReprovada)
-                    @Html.TextBoxFor(m => m.CadastroLoteProducao.QtdReprovada, new { @class = "form-control", type = "number", min = "0", step = "1", @id = "txtQtdReprovada" })
-                    @Html.ValidationMessageFor(m => m.CadastroLoteProducao.QtdReprovada, "", new { @class = "text-danger" })
-                </div>
-
-                <div class="col-md-1">
-                    % Reprov.
-                    <input type="text" class="form-control" id="txtPercentReprovacao" readonly />
-                </div>
-
-                <div class="col-md-2">
-                    Status
-                    <input type="text" class="form-control" id="txtStatus" readonly />
-                </div>
-
-                <div class="col-md-4">
-                    @Html.DisplayNameFor(m => m.CadastroLoteProducao.Comentario)
-                    @Html.TextAreaFor(m => m.CadastroLoteProducao.Comentario, new { @class = "form-control", @id = "txtQtdReprovada", @placeholder = "Digite aqui..." })
-                    @Html.ValidationMessageFor(m => m.CadastroLoteProducao.Comentario, "", new { @class = "text-danger" })
-                </div>
-
-                <div class="col-md-1">
-                    <br />
-                    <input type="submit" class="btn btn-success" value="Cadastrar" id="btnCadastrar" />
-                </div>
+            <div class="col-md-2">
+                @Html.DisplayNameFor(m => m.TipoLote)
+                @Html.TextBoxFor(m => m.TipoLote, new { @class = "form-control", @id = "txtTipoLote", @readonly = "readonly" })
             </div>
 
-            <div class="row">
-                @Html.HiddenFor(m => m.LimiteControle.IdLimite)
-                @Html.HiddenFor(m => m.LimiteControle.LSC, new { @id = "lblLSC" })
-                @Html.HiddenFor(m => m.LimiteControle.LC)
-                @Html.HiddenFor(m => m.LimiteControle.LIC, new { @id = "lblLIC" })
-                @Html.LabelFor(m => m.LimiteControle.LSC): @Html.DisplayTextFor(m => m.LimiteControle.LSC) / @Html.LabelFor(m => m.LimiteControle.LC): @Html.DisplayTextFor(m => m.LimiteControle.LC) / @Html.LabelFor(m => m.LimiteControle.LIC): @Html.DisplayTextFor(m => m.LimiteControle.LIC)
+            <div class="col-md-2">
+                @Html.DisplayNameFor(m => m.UsuarioAnalise)
+                @Html.HiddenFor(m => m.UsuarioAnalise.IdUsuario)
+                @Html.TextBoxFor(m => m.UsuarioAnalise.Nome, new { @class = "form-control", @id = "txtUsuarioAnalise", @readonly = "readonly" })
+                @Html.ValidationMessageFor(m => m.UsuarioAnalise.Nome, "", new { @class = "text-danger" })
             </div>
 
+            <div class="col-md-2">
+                @Html.DisplayNameFor(m => m.IdMaquina)
+                @Html.DropDownListFor(m => m.IdMaquina, Model.ListarMaquinas, "Selecione", new { @class = "form-control", @id = "txtMaquina" })
+                @Html.ValidationMessageFor(m => m.IdMaquina, "", new { @class = "text-danger" })
+            </div>
 
-            <!-- Janela modal -->
-            <div id="modalAprovacao" class="modal fade">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header bg-primary">
-                            <h3>Aprovação de Lote</h3>
-                            Este lote está reprovado estatísticamente.
-                            Se deseja aprová-lo, insira abaixo as credenciais do usuário responsável pela aprovação do Lote.
-                            Caso contrário, deixe os campos abaixo em branco e clique sobre o botão <strong>Cadastrar Lote</strong>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    @Html.DisplayNameFor(m => m.CadastroLoteProducao.UsuarioAprovacao.Login)
-                                    @Html.TextBoxFor(m => m.CadastroLoteProducao.UsuarioAprovacao.Login, new { @class = "form-control", @id = "txtUsuarioAprovacaoLogin" })
-                                </div>
-                                <div class="col-md-6">
-                                    @Html.DisplayNameFor(m => m.CadastroLoteProducao.UsuarioAprovacao.Senha)
-                                    @Html.PasswordFor(m => m.CadastroLoteProducao.UsuarioAprovacao.Senha, new { @class = "form-control", @id = "txtUsuarioAprovacaoSenha" })
-                                </div>
+            <div class="col-md-1">
+                @Html.DisplayNameFor(m => m.QtdTotal)
+                @Html.TextBoxFor(m => m.QtdTotal, new { @class = "form-control", type = "number", min = "1", step = "1", @id = "txtQtdTotal" })
+                @Html.ValidationMessageFor(m => m.QtdTotal, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-1">
+                @Html.DisplayNameFor(m => m.IdLote)
+                @Html.TextBoxFor(m => m.IdLote, new { @class = "form-control", type = "number", min = 1, max = 10000, step = "1", @id = "txtLote" })
+                @Html.ValidationMessageFor(m => m.IdLote, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="col-md-2">
+                @Html.DisplayNameFor(m => m.QtdReprovada)
+                @Html.TextBoxFor(m => m.QtdReprovada, new { @class = "form-control", type = "number", min = "0", step = "1", @id = "txtQtdReprovada" })
+                @Html.ValidationMessageFor(m => m.QtdReprovada, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="col-md-1">
+                % Reprov.
+                <input type="text" class="form-control" id="txtPercentReprovacao" readonly />
+            </div>
+
+            <div class="col-md-2">
+                Status
+                <input type="text" class="form-control" id="txtStatus" readonly />
+            </div>
+
+            <div class="col-md-4">
+                @Html.DisplayNameFor(m => m.Comentario)
+                @Html.TextAreaFor(m => m.Comentario, new { @class = "form-control", @id = "txtQtdReprovada", @placeholder = "Digite aqui..." })
+                @Html.ValidationMessageFor(m => m.Comentario, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="col-md-1">
+                <br />
+                <input type="submit" class="btn btn-success" value="Cadastrar" id="btnCadastrar" />
+            </div>
+        </div>
+
+        <div class="row">
+            @Html.HiddenFor(m => m.LimiteControle.IdLimite)
+            @Html.HiddenFor(m => m.LimiteControle.LSC, new { @id = "lblLSC" })
+            @Html.HiddenFor(m => m.LimiteControle.LC)
+            @Html.HiddenFor(m => m.LimiteControle.LIC, new { @id = "lblLIC" })
+            @Html.LabelFor(m => m.LimiteControle.LSC): @Html.DisplayTextFor(m => m.LimiteControle.LSC) / @Html.LabelFor(m => m.LimiteControle.LC): @Html.DisplayTextFor(m => m.LimiteControle.LC) / @Html.LabelFor(m => m.LimiteControle.LIC): @Html.DisplayTextFor(m => m.LimiteControle.LIC)
+        </div>
+
+
+        <!-- Janela modal -->
+        <div id="modalAprovacao" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header bg-primary">
+                        <h3>Aprovação de Lote</h3>
+                        Este lote está reprovado estatísticamente.
+                        Se deseja aprová-lo, insira abaixo as credenciais do usuário responsável pela aprovação do Lote.
+                        Caso contrário, deixe os campos abaixo em branco e clique sobre o botão <strong>Cadastrar Lote</strong>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                @Html.DisplayNameFor(m => m.UsuarioAprovacao.Login)
+                                @Html.TextBoxFor(m => m.UsuarioAprovacao.Login, new { @class = "form-control", @id = "txtUsuarioAprovacaoLogin" })
+                            </div>
+                            <div class="col-md-6">
+                                @Html.DisplayNameFor(m => m.UsuarioAprovacao.Senha)
+                                @Html.PasswordFor(m => m.UsuarioAprovacao.Senha, new { @class = "form-control", @id = "txtUsuarioAprovacaoSenha" })
                             </div>
                         </div>
-                        <div class="modal-footer">
-                            <input type="submit" id="btnReprovarLote" class="btn btn-danger" value="Reprovar Lote" data-reprovar="false" onclick="$('#btnReprovarLote').data('reprovar',true)">
-                            <input type="submit" id="btncadastroModal" class="btn btn-success" value="Cadastrar Lote">
-                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" id="btnReprovarLote" class="btn btn-danger" value="Reprovar Lote" data-reprovar="false" onclick="$('#btnReprovarLote').data('reprovar',true)">
+                        <input type="submit" id="btncadastroModal" class="btn btn-success" value="Cadastrar Lote">
                     </div>
                 </div>
             </div>
-        }
-    </div>
-}
-
-
+        </div>
+    }
+</div>

@@ -140,30 +140,31 @@ namespace Projeto.DAL.Persistencia
             }
         }
 
-        public List<Lote> ConsultarLotesProducao(int? idLimite = null, int? qtd = int.MaxValue)
+        public List<Lote> ConsultarLotesProducao(DateTime dataInicio, DateTime dataFim, Status status)
         {
             try
             {
                 AbrirConexao();
 
-                string query = qtd != int.MaxValue ? $"select Top {qtd} " : "select ";
-                query +=
-                    "l.idLote, dataHora, qtdTotal, qtdReprovada, percentualReprovado, status, comentario, " +
+                string query =
+                    "select l.idLote, dataHora, qtdTotal, qtdReprovada, percentualReprovado, status, comentario, " +
                     "u_analise.nome 'usuarioAnalise', u_aprovacao.nome 'usuarioAprovacao', lc.LSC, lc.LC, lc.LIC, l.tipoLote, m.idMaquina, m.codInterno from Lote l " +
                     "inner join Usuario u_analise on l.idUsuarioAnalise = u_analise.idUsuario " +
                     "left join Usuario u_aprovacao on l.idUsuarioAprovacao = u_aprovacao.idUsuario " +
                     "inner join Maquina m on l.idMaquina = m.idMaquina " +
                     "inner join LimiteControle lc on l.idLimite = lc.idLimite " +
                     "where " +
-                    "(@idLimite is null or l.idLimite = @idLimite) " +
+                    "dataHora between @dataInicio and @dataFim " +
                     "and " +
-                    "(@idLimite is not null or l.idLote in (select idLote from TempLote)) " +
+                    "(@status is null or status = @status) " +
                     "and tipoLote = @tipoLote " +
                     "order by dataHora";
 
                 cmd = new SqlCommand(query, con);
-                cmd.Parameters.AddWithNullValue("@idLimite", idLimite);
-                cmd.Parameters.AddWithNullValue("@tipoLote", TipoLote.Producao.ToString());
+                cmd.Parameters.AddWithValue("@dataInicio", dataInicio);
+                cmd.Parameters.AddWithValue("@dataFim", dataFim + new TimeSpan(23,59,59));
+                cmd.Parameters.AddWithNullValue("@status", status != 0 ? status.ToString() : null);
+                cmd.Parameters.AddWithValue("@tipoLote", TipoLote.Producao.ToString());
                 dr = cmd.ExecuteReader();
 
                 var lista = new List<Lote>();
